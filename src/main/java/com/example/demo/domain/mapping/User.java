@@ -1,9 +1,7 @@
 package com.example.demo.domain.mapping;
 
 import com.example.demo.domain.common.BaseEntity;
-import com.example.demo.domain.enums.Platform;
-import com.example.demo.domain.enums.Read;
-import com.example.demo.domain.enums.Status;
+
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,6 +17,10 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userIdx;
 
+    @ManyToOne
+    @JoinColumn(name = "boardImgIdx")
+    private BoardImage boardImage;
+
     @Column(length = 30)
     private String instagramId;
 
@@ -27,14 +29,13 @@ public class User extends BaseEntity {
 
     private String refreshToken;
 
-    @Enumerated(EnumType.STRING)
-    private Platform platform;
+
+    private Integer platform;
 
     private String link;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
 
-    @Enumerated(EnumType.STRING)
-    private Read read;
+    private Integer status;
+
+    private Integer read;
 }

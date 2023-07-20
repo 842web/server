@@ -1,7 +1,6 @@
 package com.example.demo.domain.mapping;
 
 import com.example.demo.domain.common.BaseEntity;
-import com.example.demo.domain.enums.Status;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,16 +15,15 @@ public class Admin extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long adminIdx;
 
     @Column(length = 45)
     private String phone;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    private Integer status;
 
-    //@OneToOne
-    //@JoinColumn(name = "userIdx")
-    //private User user;
+    @OneToOne
+    @JoinColumn(name = "userIdx")
+    private User user;
 
 }

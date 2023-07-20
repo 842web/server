@@ -1,7 +1,6 @@
 package com.example.demo.domain.mapping;
 
 import com.example.demo.domain.common.BaseEntity;
-import com.example.demo.domain.enums.Status;
 import lombok.*;
 import org.hibernate.annotations.Cache;
 
@@ -36,10 +35,15 @@ public class Post extends BaseEntity {
 
     private String imageUrl;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    private Integer status;
 
+    private Integer read;
 
+    @ManyToOne
+    @JoinColumn(name = "postImageIdx")
+    private PostImage postImage;
 
-
+    @ManyToOne
+    @JoinColumn(name = "answerIdx")
+    private User user;
 }

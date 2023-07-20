@@ -1,7 +1,7 @@
 package com.example.demo.domain.mapping;
 
 import com.example.demo.domain.common.BaseEntity;
-import com.example.demo.domain.enums.Status;
+
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,6 +22,7 @@ public class Terms extends BaseEntity {
 
     private String desc;
 
-    private Status status;
+    private Integer status;
+
 
 }
