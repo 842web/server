@@ -1,12 +1,10 @@
-package com.example.demo.src.test;
+package com.example.demo.web.controller;
 
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
-import com.example.demo.src.image.ImageService;
-import com.example.demo.src.image.model.PostImage;
+import com.example.demo.domain.mapping.PostImage;
+import com.example.demo.provider.PostImageProvider;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -23,22 +21,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TestController {
     @Autowired
-    private final ImageService imageService;
+    private final PostImageProvider postImageProvider;
 
     /**
-     * JDBC 연결 테스트
+     * JPA 사용 테스트
      * */
-    @Operation(summary = "JDBC 연결 테스트 API", description = "이런거")
+    @Operation(summary = "JPA 연결 테스트 API", description = "이런거")
     @GetMapping("/postImages")
     @ApiResponse(responseCode = "200", description = "성공")
-    public BaseResponse<List<PostImage>> getPostImages() {
-        // Validation
+    public BaseResponse<List<PostImage>> getPostImagesWithJPA() {
         try {
-            List<PostImage> getPostImages = imageService.getPostImages();
+            List<PostImage> getPostImages = postImageProvider.findAllPostImages();
             return new BaseResponse<>(getPostImages);
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
-
 }
