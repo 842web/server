@@ -15,7 +15,8 @@ public class Terms extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long termIdx;
+    @Column(name = "term_idx")
+    private Long id;
 
     @Column(length = 200)
     private String title;

@@ -13,7 +13,8 @@ public class PostImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long postImageIdx;
+    @Column(name = "post_image_idx")
+    private Long id;
 
     private String url;
 }

@@ -15,19 +15,20 @@ public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long userIdx;
+    @Column(name = "user_idx")
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "boardImgIdx")
+    @JoinColumn(name = "board_img_idx")
     private BoardImage boardImage;
 
     @Column(length = 30)
-    private String instagramId;
+    private String instagram_id;
 
     @Column(length = 30)
     private String nickname;
 
-    private String refreshToken;
+    private String refresh_token;
 
 
     private Integer platform;

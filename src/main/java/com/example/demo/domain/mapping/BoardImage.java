@@ -13,7 +13,8 @@ public class BoardImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long boardImgIdx;
+    @Column(name = "board_image_idx")
+    private Long id;
 
     private String url;
 }
