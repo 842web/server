@@ -16,13 +16,14 @@ public class Post extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long postIdx;
+    @Column(name = "post_idx")
+    private Long id;
 
     @Column(length = 50)
-    private String questionerId;
+    private String questioner_id;
 
     @Column(length = 30)
-    private String questionerName;
+    private String questioner_name;
 
     @Column(length = 1000)
     private String question1;
@@ -40,10 +41,10 @@ public class Post extends BaseEntity {
     private Integer read;
 
     @ManyToOne
-    @JoinColumn(name = "postImageIdx")
+    @JoinColumn(name = "post_image_idx")
     private PostImage postImage;
 
     @ManyToOne
-    @JoinColumn(name = "answerIdx")
+    @JoinColumn(name = "answer_idx")
     private User user;
 }

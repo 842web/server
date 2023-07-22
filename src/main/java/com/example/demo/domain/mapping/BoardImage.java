@@ -2,10 +2,7 @@ package com.example.demo.domain.mapping;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Builder
@@ -16,7 +13,8 @@ public class BoardImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long boardImgIdx;
+    @Column(name = "board_image_idx")
+    private Long id;
 
     private String url;
 }

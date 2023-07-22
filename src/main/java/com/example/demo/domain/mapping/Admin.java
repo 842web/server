@@ -15,7 +15,8 @@ public class Admin extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long adminIdx;
+    @Column(name = "admin_idx")
+    private Long id;
 
     @Column(length = 45)
     private String phone;
@@ -23,7 +24,7 @@ public class Admin extends BaseEntity {
     private Integer status;
 
     @OneToOne
-    @JoinColumn(name = "userIdx")
+    @JoinColumn(name = "user_idx")
     private User user;
 
 }
