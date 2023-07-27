@@ -38,13 +38,13 @@ public class Post extends BaseEntity {
 
     private Integer status;
 
-    private Integer read;
+    private Integer read_info;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_image_idx")
     private PostImage postImage;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "answer_idx")
     private User user;
 }

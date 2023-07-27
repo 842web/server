@@ -1,7 +1,6 @@
 package com.example.demo.domain.mapping;
 
 import com.example.demo.domain.common.BaseEntity;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.*;
 
 import javax.persistence.*;
