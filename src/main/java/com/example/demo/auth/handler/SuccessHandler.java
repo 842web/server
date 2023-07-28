@@ -56,8 +56,8 @@ public class SuccessHandler  extends SimpleUrlAuthenticationSuccessHandler {
             String url = makeRedirectUrl(jwtTokenProvider.generateToken(authentication).getAccessToken());
             getRedirectStrategy().sendRedirect(request, response, url); //성공 시점에 redirect
 
-        }catch (Exception e){
-            System.out.println(e);
+        }catch (Exception err){
+            System.out.println(err);
         }
 
     }
