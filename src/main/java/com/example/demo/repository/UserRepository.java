@@ -7,8 +7,12 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.Id;
 import java.util.Optional;
 
+
 public interface UserRepository extends JpaRepository<User, Long> {
 
 
     Optional<User> findByEmail(String email);
+
+    Optional<UserInfoMapping> findStatusByEmail(String email);
+
 }
