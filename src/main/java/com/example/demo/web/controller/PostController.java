@@ -1,17 +1,19 @@
 package com.example.demo.web.controller;
 
+import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
 import com.example.demo.converter.PostConvertor;
+import com.example.demo.domain.mapping.Post;
 import com.example.demo.service.PostService;
 import com.example.demo.web.dto.requestDto.PostRequestDto;
+import com.example.demo.web.dto.responseDto.PostResponseDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.*;
 
 
 @Slf4j
@@ -31,14 +33,14 @@ public class PostController {
      * */
     @PostMapping("")
     public BaseResponse<String> writePost(@RequestBody PostRequestDto.CreatePostDto request) {
-        // Validation
+        // TODO: Validation, Exception
 
         try {
             Long post_id = postService.savePost(PostConvertor.toPost(request));
             return new BaseResponse<>(post_id.toString());
-        } catch (Exception e) {
+        } catch (BaseException e) {
             e.printStackTrace();
-            return new BaseResponse<>(e.getMessage());
+            return new BaseResponse<>(e.getStatus());
         }
     }
 
@@ -47,6 +49,18 @@ public class PostController {
      * [GET] /posts?pageSize=?pageNo
      * @return BaseResponse<List<Post>>
      * */
+    @GetMapping("")
+    public BaseResponse<PostResponseDto.PostDtoList> getPost(@RequestParam Integer pageSize, @RequestParam Integer pageNo) {
+        // TODO: Validation, Exception
+
+        try {
+            Page<Post> posts = postService.findPostPagingCreatedAt(PageRequest.of(pageNo, pageSize));
+            return new BaseResponse<>(PostConvertor.toPostDtoList(posts.toList(), posts.getNumberOfElements()));
+        } catch (BaseException e) {
+            e.printStackTrace();
+            return new BaseResponse<>(e.getStatus());
+        }
+    }
 
     /**
      * 포스트 상세 조회 API

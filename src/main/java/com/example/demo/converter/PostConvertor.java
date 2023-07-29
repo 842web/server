@@ -6,11 +6,14 @@ import com.example.demo.domain.mapping.User;
 import com.example.demo.repository.PostImageRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.web.dto.requestDto.PostRequestDto;
+import com.example.demo.web.dto.responseDto.PostResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -48,5 +51,24 @@ public class PostConvertor {
         log.info("PostConvertor::toPost() \n" + post.toString());
 
         return post;
+    }
+
+    public static PostResponseDto.PostDto toPostDto(Post post) {
+        return PostResponseDto.PostDto.builder()
+                .postIdx(post.getId())
+                .imageUrl(post.getImageUrl())
+                .build();
+    }
+
+    public static PostResponseDto.PostDtoList toPostDtoList(List<Post> postList, Integer totalRecords) {
+        List<PostResponseDto.PostDto> postDtoList =
+                postList.stream()
+                        .map(PostConvertor::toPostDto)
+                        .collect(Collectors.toList());
+
+        return PostResponseDto.PostDtoList.builder()
+                .postList(postDtoList)
+                .totalRecords(totalRecords)
+                .build();
     }
 }
