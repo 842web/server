@@ -2,20 +2,22 @@ package com.example.demo.domain.mapping;
 
 import com.example.demo.domain.common.BaseEntity;
 import lombok.*;
-import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 
 @Entity
 @Builder
 @Getter
+@ToString
+@DynamicInsert
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post extends BaseEntity {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_idx")
     private Long id;
 
@@ -36,8 +38,10 @@ public class Post extends BaseEntity {
 
     private String imageUrl;
 
+    @Column(columnDefinition = "DEFAULT 1")
     private Integer status;
 
+    @Column(columnDefinition = "DEFAULT -1")
     private Integer read;
 
     @ManyToOne
@@ -45,6 +49,6 @@ public class Post extends BaseEntity {
     private PostImage postImage;
 
     @ManyToOne
-    @JoinColumn(name = "answer_idx")
+    @JoinColumn(name = "answerer_idx")
     private User user;
 }

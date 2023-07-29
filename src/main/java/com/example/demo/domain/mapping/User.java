@@ -19,7 +19,7 @@ public class User extends BaseEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "board_img_idx")
+    @JoinColumn(name = "board_image_idx")
     private BoardImage boardImage;
 
     @Column(length = 30)
@@ -38,5 +38,4 @@ public class User extends BaseEntity {
 
     private Integer status;
 
-    private Integer read;
 }
