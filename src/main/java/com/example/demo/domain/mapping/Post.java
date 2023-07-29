@@ -3,14 +3,17 @@ package com.example.demo.domain.mapping;
 import com.example.demo.domain.common.BaseEntity;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
 @Entity
 @Builder
 @Getter
+@Setter
 @ToString
 @DynamicInsert
+@DynamicUpdate
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post extends BaseEntity {

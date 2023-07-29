@@ -85,4 +85,16 @@ public class PostController {
      * [POST] /posts/answer
      * @return BaseResponse<String>
      * */
+    @PostMapping("/answer")
+    public BaseResponse<String> checkAnswer(@RequestBody PostRequestDto.UpdatePostReadDto request) {
+        // TODO: Validation, Exception
+
+        try {
+            Boolean result = postService.checkPostAnswer(Long.valueOf(request.getPostIdx()), request.getAnswer());
+            return new BaseResponse<>(result.toString());
+        } catch (BaseException e) {
+            e.printStackTrace();
+            return new BaseResponse<>(e.getStatus());
+        }
+    }
 }

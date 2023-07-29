@@ -16,5 +16,8 @@ public interface PostService {
 
     Post findPostById(Long postIdx) throws BaseException;
 
+    // R (Check)
+    boolean checkPostAnswer(Long postIdx, String answer) throws BaseException;
+
     // D (Delete)
 }

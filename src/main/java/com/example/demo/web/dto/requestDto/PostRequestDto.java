@@ -29,4 +29,14 @@ public class PostRequestDto {
         @NotBlank
         String imageUrl;
     }
+
+    @Getter
+    @Setter
+    @ToString
+    public static class UpdatePostReadDto{
+        @NotBlank
+        String postIdx;
+        @NotBlank
+        String answer;
+    }
 }
