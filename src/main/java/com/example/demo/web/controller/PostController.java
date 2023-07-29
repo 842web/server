@@ -67,6 +67,18 @@ public class PostController {
      * [POST] /posts/:postIdx
      * @return BaseResponse<Post>
      * */
+    @GetMapping("{postIdx}")
+    public BaseResponse<PostResponseDto.PostDto> getPostDetail(@PathVariable Long postIdx) {
+        // TODO: Validation, Exception
+
+        try {
+            Post post = postService.findPostById(postIdx);
+            return new BaseResponse<>(PostConvertor.toPostDto(post));
+        } catch (BaseException e) {
+            e.printStackTrace();
+            return new BaseResponse<>(e.getStatus());
+        }
+    }
 
     /**
      * 포스트 정답 확인 API

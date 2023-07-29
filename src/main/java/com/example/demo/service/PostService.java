@@ -14,5 +14,7 @@ public interface PostService {
     // R (Read)
     Page<Post> findPostPagingCreatedAt(PageRequest pageRequest) throws BaseException;
 
+    Post findPostById(Long postIdx) throws BaseException;
+
     // D (Delete)
 }
