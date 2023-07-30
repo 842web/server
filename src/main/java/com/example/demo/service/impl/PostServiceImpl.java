@@ -42,7 +42,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public boolean checkPostAnswer(Long postIdx, String answer) throws BaseException {
-        Post post = postRepository.findById(postIdx).get();
+        Post post = postRepository.findById(postIdx).orElseThrow(()-> new BaseException(Code.POST_NOT_FOUND));
 
         boolean isAnswer = post.getQuestioner_id().equals(answer) || post.getQuestioner_name().equals(answer);
         if (isAnswer) {

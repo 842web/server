@@ -26,7 +26,7 @@ public class PostRequestDto {
         String question3;
         @NotBlank(message = "포스트 이미지 인덱스는 필수값입니다.")
         String imageIdx;
-        @NotBlank(message = "이미지는 필수값입니다.")
+        @NotBlank(message = "이미지는 수필수값입니다.")
         String imageUrl;
     }
 

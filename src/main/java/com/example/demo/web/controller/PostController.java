@@ -16,6 +16,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 
 @Slf4j
@@ -35,8 +37,6 @@ public class PostController {
      * */
     @PostMapping("")
     public BaseResponse<String> writePost(@Valid @RequestBody PostRequestDto.CreatePostDto request) throws BaseException {
-        // TODO: Validation, Exception
-
         Long post_id = postService.savePost(PostConvertor.toPost(request));
         return new BaseResponse<>(post_id.toString());
     }
@@ -47,16 +47,13 @@ public class PostController {
      * @return BaseResponse<List<Post>>
      * */
     @GetMapping("")
-    public BaseResponse<PostResponseDto.PostDtoList> getPost(@RequestParam Integer pageSize, @RequestParam Integer pageNo) {
-        // TODO: Validation, Exception
+    public BaseResponse<PostResponseDto.PostDtoList> getPost(
+            @NotNull(message = "페이지 사이즈는 필수값입니다.") @RequestParam Integer pageSize,
+            @NotNull(message = "페이지 번호는 필수값입니다.") @RequestParam Integer pageNo) throws BaseException {
 
-        try {
-            Page<Post> posts = postService.findPostPagingCreatedAt(PageRequest.of(pageNo, pageSize));
-            return new BaseResponse<>(PostConvertor.toPostDtoList(posts.toList(), posts.getNumberOfElements()));
-        } catch (BaseException e) {
-            e.printStackTrace();
-            return new BaseResponse<>(e.getStatus());
-        }
+        // TODO: userIdx 받기, param Validation
+        Page<Post> posts = postService.findPostPagingCreatedAt(PageRequest.of(pageNo, pageSize));
+        return new BaseResponse<>(PostConvertor.toPostDtoList(posts.toList(), posts.getNumberOfElements()));
     }
 
     /**
@@ -65,8 +62,8 @@ public class PostController {
      * @return BaseResponse<Post>
      * */
     @GetMapping("{postIdx}")
-    public BaseResponse<PostResponseDto.PostDto> getPostDetail(@PathVariable Long postIdx) throws BaseException {
-        // TODO: Validation, Exception
+    public BaseResponse<PostResponseDto.PostDto> getPostDetail(@NotBlank(message = "포스트 번호는 필수값입니다.") @PathVariable Long postIdx) throws BaseException {
+        // TODO: Validation
         Post post = postService.findPostById(postIdx);
         return new BaseResponse<>(PostConvertor.toPostDto(post));
     }
@@ -77,15 +74,8 @@ public class PostController {
      * @return BaseResponse<String>
      * */
     @PostMapping("/answer")
-    public BaseResponse<String> checkAnswer(@Valid @RequestBody PostRequestDto.UpdatePostReadDto request) {
-        // TODO: Validation, Exception
-
-        try {
-            Boolean result = postService.checkPostAnswer(Long.valueOf(request.getPostIdx()), request.getAnswer());
-            return new BaseResponse<>(result.toString());
-        } catch (BaseException e) {
-            e.printStackTrace();
-            return new BaseResponse<>(e.getStatus());
-        }
+    public BaseResponse<String> checkAnswer(@Valid @RequestBody PostRequestDto.UpdatePostReadDto request) throws BaseException {
+        Boolean result = postService.checkPostAnswer(Long.valueOf(request.getPostIdx()), request.getAnswer());
+        return new BaseResponse<>(result.toString());
     }
 }
