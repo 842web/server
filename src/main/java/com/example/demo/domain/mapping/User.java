@@ -14,11 +14,11 @@ import javax.persistence.*;
 public class User extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_idx")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_img_idx")
     private BoardImage boardImage;
 
@@ -30,13 +30,17 @@ public class User extends BaseEntity {
 
     private String refresh_token;
 
+    @Column(name = "registrationId")
+    private String register_id;
 
-    private Integer platform;
+    private String email;
+    private Integer platform_info;
 
-    private String link;
-
+    private String link_info;
 
     private Integer status;
 
-    private Integer read;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
 }

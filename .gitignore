@@ -36,5 +36,12 @@ out/
 ### VS Code ###
 .vscode/
 
+<<<<<<< HEAD
+<<<<<<< feature/auth
+=======
 ### Custom ###
+>>>>>>> develop
+=======
+### Custom ###
+>>>>>>> 701c15e7c86eae67d09b88d9e25104ee3d287da3
 /src/main/resources/application.yml
