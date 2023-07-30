@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.example.demo.config.base;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
  * 에러 코드 관리
  */
 @Getter
-public enum BaseResponseStatus {
+public enum Code {
     /**
      * 200 : 요청 성공
      */
@@ -25,11 +25,15 @@ public enum BaseResponseStatus {
     INVALID_USER_JWT(false,HttpStatus.FORBIDDEN.value(),"권한이 없는 유저의 접근입니다."),
     RESPONSE_ERROR(false, HttpStatus.NOT_FOUND.value(), "값을 불러오는데 실패하였습니다."),
 
+    // INVALID
     INVALID_USER_NO(false, HttpStatus.BAD_REQUEST.value(), "잘못된 형식의 유저 번호입니다."),
     INVALID_IDX(false, HttpStatus.BAD_REQUEST.value(), "잘못된 형식의 인덱스입니다."),
     INVALID_PAGE_NO(false, HttpStatus.BAD_REQUEST.value(), "잘못된 페이지 번호입니다."),
 
-
+    // NOT FOUND
+    POST_NOT_FOUND(false,  HttpStatus.BAD_REQUEST.value(), "포스트가 존재하지 않습니다."),
+    USER_NOT_FOUND(false,  HttpStatus.BAD_REQUEST.value(), "유저가 존재하지 않습니다."),
+    POST_IMAGE_NOT_FOUND(false,  HttpStatus.BAD_REQUEST.value(), "포스트 이미지가 존재하지 않습니다."),
 
     /**
      * 50 : Database, Server 오류
@@ -41,7 +45,7 @@ public enum BaseResponseStatus {
     private final int code;
     private final String message;
 
-    private BaseResponseStatus(boolean isSuccess, int code, String message) {
+    private Code(boolean isSuccess, int code, String message) {
         this.isSuccess = isSuccess;
         this.code = code;
         this.message = message;

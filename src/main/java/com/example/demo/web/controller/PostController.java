@@ -1,7 +1,7 @@
 package com.example.demo.web.controller;
 
-import com.example.demo.config.BaseException;
-import com.example.demo.config.BaseResponse;
+import com.example.demo.config.base.BaseException;
+import com.example.demo.config.base.BaseResponse;
 import com.example.demo.converter.PostConvertor;
 import com.example.demo.domain.mapping.Post;
 import com.example.demo.service.PostService;
@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @Slf4j
@@ -32,16 +34,11 @@ public class PostController {
      * @return BaseResponse<String>
      * */
     @PostMapping("")
-    public BaseResponse<String> writePost(@RequestBody PostRequestDto.CreatePostDto request) {
+    public BaseResponse<String> writePost(@Valid @RequestBody PostRequestDto.CreatePostDto request) throws BaseException {
         // TODO: Validation, Exception
 
-        try {
-            Long post_id = postService.savePost(PostConvertor.toPost(request));
-            return new BaseResponse<>(post_id.toString());
-        } catch (BaseException e) {
-            e.printStackTrace();
-            return new BaseResponse<>(e.getStatus());
-        }
+        Long post_id = postService.savePost(PostConvertor.toPost(request));
+        return new BaseResponse<>(post_id.toString());
     }
 
     /**
@@ -68,16 +65,10 @@ public class PostController {
      * @return BaseResponse<Post>
      * */
     @GetMapping("{postIdx}")
-    public BaseResponse<PostResponseDto.PostDto> getPostDetail(@PathVariable Long postIdx) {
+    public BaseResponse<PostResponseDto.PostDto> getPostDetail(@PathVariable Long postIdx) throws BaseException {
         // TODO: Validation, Exception
-
-        try {
-            Post post = postService.findPostById(postIdx);
-            return new BaseResponse<>(PostConvertor.toPostDto(post));
-        } catch (BaseException e) {
-            e.printStackTrace();
-            return new BaseResponse<>(e.getStatus());
-        }
+        Post post = postService.findPostById(postIdx);
+        return new BaseResponse<>(PostConvertor.toPostDto(post));
     }
 
     /**
@@ -86,7 +77,7 @@ public class PostController {
      * @return BaseResponse<String>
      * */
     @PostMapping("/answer")
-    public BaseResponse<String> checkAnswer(@RequestBody PostRequestDto.UpdatePostReadDto request) {
+    public BaseResponse<String> checkAnswer(@Valid @RequestBody PostRequestDto.UpdatePostReadDto request) {
         // TODO: Validation, Exception
 
         try {

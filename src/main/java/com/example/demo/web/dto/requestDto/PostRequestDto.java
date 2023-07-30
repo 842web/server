@@ -12,21 +12,21 @@ public class PostRequestDto {
     @Setter
     @ToString
     public static class CreatePostDto{
-        @NotBlank
+        @NotBlank(message = "질문자 아이디는 필수값입니다.")
         String questioner_id;
-        @NotBlank
+        @NotBlank(message = "질문자 이름은 필수값입니다.")
         String questioner_name;
-        @NotBlank
+        @NotBlank(message = "답변자 인덱스는 필수값입니다.")
         String answerer_idx;
-        @NotBlank
+        @NotBlank(message = "질문1은 필수값입니다.")
         String question1;
-        @NotBlank
+        @NotBlank(message = "질문2는 필수값입니다.")
         String question2;
-        @NotBlank
+        @NotBlank(message = "질문3은 필수값입니다.")
         String question3;
-        @NotBlank
+        @NotBlank(message = "포스트 이미지 인덱스는 필수값입니다.")
         String imageIdx;
-        @NotBlank
+        @NotBlank(message = "이미지는 필수값입니다.")
         String imageUrl;
     }
 
@@ -34,9 +34,9 @@ public class PostRequestDto {
     @Setter
     @ToString
     public static class UpdatePostReadDto{
-        @NotBlank
+        @NotBlank(message = "포스트 인덱스는 필수값입니다.")
         String postIdx;
-        @NotBlank
+        @NotBlank(message = "답변은 필수값입니다.")
         String answer;
     }
 }

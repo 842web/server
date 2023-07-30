@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.example.demo.config.base;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,5 +8,5 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class BaseException extends Exception {
-    private BaseResponseStatus status;
+    private Code status;
 }

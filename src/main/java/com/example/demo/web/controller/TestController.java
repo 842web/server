@@ -1,7 +1,7 @@
 package com.example.demo.web.controller;
 
-import com.example.demo.config.BaseException;
-import com.example.demo.config.BaseResponse;
+import com.example.demo.config.base.BaseException;
+import com.example.demo.config.base.BaseResponse;
 import com.example.demo.domain.mapping.PostImage;
 import com.example.demo.provider.PostImageProvider;
 import io.swagger.v3.oas.annotations.Operation;

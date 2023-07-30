@@ -1,7 +1,9 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.config.BaseException;
+import com.example.demo.config.base.BaseException;
+import com.example.demo.config.base.Code;
 import com.example.demo.domain.mapping.Post;
+import com.example.demo.repository.PostImageRepository;
 import com.example.demo.repository.PostRepository;
 import com.example.demo.service.PostService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +18,9 @@ import org.springframework.stereotype.Service;
 public class PostServiceImpl implements PostService {
     @Autowired
     PostRepository postRepository;
+
+    @Autowired
+    PostImageRepository postImageRepository;
 
     // C (Create), U (Update)
     @Override
@@ -32,7 +37,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post findPostById(Long postIdx) throws BaseException {
-        return postRepository.findById(postIdx).get();
+        return postRepository.findById(postIdx).orElseThrow(()->new BaseException(Code.POST_NOT_FOUND));
     }
 
     @Override
