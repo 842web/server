@@ -48,7 +48,7 @@ public class WebSecurityConfigure {
 
         //리소스 인증 및 권한 설정
         http.authorizeRequests()
-                .antMatchers("/oauth2/**").permitAll()
+                .antMatchers("/users/oauth2/**").permitAll()
                 .antMatchers("/posts").permitAll()
                 .antMatchers("/images").permitAll()
                 .antMatchers("/terms").permitAll()
@@ -64,6 +64,7 @@ public class WebSecurityConfigure {
                     .userInfoEndpoint().userService(customOAuth2UserService)
                     .and()
                     .successHandler(successHandler);
+
                     //.failureHandler(failureHandler);
 
 
