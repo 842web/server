@@ -30,12 +30,21 @@ public enum BaseResponseStatus {
     INVALID_PAGE_NO(false, HttpStatus.BAD_REQUEST.value(), "잘못된 페이지 번호입니다."),
 
 
-
     /**
      * 50 : Database, Server 오류
      */
     DATABASE_ERROR(false, HttpStatus.INTERNAL_SERVER_ERROR.value(), "데이터베이스 연결에 실패하였습니다."),
-    SERVER_ERROR(false, HttpStatus.INTERNAL_SERVER_ERROR.value(), "서버와의 연결에 실패하였습니다.");
+    SERVER_ERROR(false, HttpStatus.INTERNAL_SERVER_ERROR.value(), "서버와의 연결에 실패하였습니다."),
+
+
+
+    /*
+    * 로그인, 회원 가입 오류
+    * */
+
+    IS_NOT_JOIN_US(false, HttpStatus.BAD_REQUEST.value(), "회원가입이 되어 있지 않은 유저 입니다. 회원가입 페이지로 이동해주세요");
+
+
 
     private final boolean isSuccess;
     private final int code;
