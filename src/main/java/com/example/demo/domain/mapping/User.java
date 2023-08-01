@@ -34,6 +34,7 @@ public class User extends BaseEntity {
     private String register_id;
 
     private String email;
+
     private Integer platform_info;
 
     private String link_info;
@@ -42,5 +43,6 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
 
 }
