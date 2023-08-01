@@ -26,4 +26,5 @@ public class Terms extends BaseEntity {
     private Integer status;
 
 
+    //
 }

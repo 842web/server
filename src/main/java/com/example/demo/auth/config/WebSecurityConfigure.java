@@ -64,6 +64,7 @@ public class WebSecurityConfigure {
                     .userInfoEndpoint().userService(customOAuth2UserService)
                     .and()
                     .successHandler(successHandler);
+
                     //.failureHandler(failureHandler);
 
 
