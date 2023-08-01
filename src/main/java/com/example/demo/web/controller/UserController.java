@@ -49,12 +49,17 @@ public class UserController {
             Long changed_board_id = userService.createUserBoardId(board_id, userId);
             if(board_id != changed_board_id){
                 //Exception
+                System.out.println("err here");
             }
 
+
             //createdAt, updatedAt update
-            userRepository.updateUserCreateDate(userId);
+            userRepository.updateUserCreateAt(userId);
             userRepository.updateUserUpdatedAt(userId);
 
+            String user_link = userService.createUserLink(userId);
+
+            System.out.println("here");
 
 
 
@@ -84,7 +89,7 @@ public class UserController {
      * */
 
     /**
-     * 회원가입 API
+     * 공유링크조회 API
      * [GET] /users/link
      * @return BaseResponse<String>
      * */

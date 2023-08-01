@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+import static org.apache.tomcat.util.net.openssl.ciphers.Encryption.AES256;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -29,5 +31,15 @@ public class UserServiceImpl implements UserService {
         userRepository.updateUserBoardId(board_id, userId);
 
         return userRepository.findById(userId).get().getBoardImage().getId();
+    }
+
+    @Override
+    public String createUserLink(Long userId){
+
+        //userid에 대해 암호화한 문자열로 링크를 생성한다.
+
+
+
+        return userRepository.findById(userId).get().getLink_info();
     }
 }

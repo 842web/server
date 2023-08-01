@@ -29,7 +29,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Modifying@Transactional
     @Query("update User set createdAt = current_timestamp where id = :userId ")
-    void updateUserCreateDate(@Param(value = "userId") Long userId);
+    void updateUserCreateAt(@Param(value = "userId") Long userId);
 
     @Modifying @Transactional
     @Query("update User set updatedAt = current_timestamp where id = :userId")
