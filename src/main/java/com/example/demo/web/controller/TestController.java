@@ -34,7 +34,7 @@ public class TestController {
             List<PostImage> getPostImages = postImageProvider.findAllPostImages();
             return new BaseResponse<>(getPostImages);
         } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
+            return new BaseResponse<>((exception.getCode()));
         }
     }
 }
