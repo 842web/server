@@ -39,17 +39,15 @@ public class SuccessHandler  extends SimpleUrlAuthenticationSuccessHandler {
             //Optional 객체는 이와 같이 .get()하고 .메소드를 사용해 값을 떼오면 된다.
 
 
-
-
             System.out.println("status:" );
             if (response.isCommitted()) {
                 logger.debug("응답이 이미 커밋된 상태입니다. ");
                 return;
             }
             if(status ==2){
-                response.getWriter().write("회원가입이 되어 있지 않습니다. 회원가입으로 이동해주세요");
+                response.getWriter().write(email + "회원가입이 되어 있지 않습니다. 회원가입으로 이동해주세요");
                 System.out.println(" 회원가입으로 이동해주세요");
-                getRedirectStrategy().sendRedirect(request, response, "http://localhost:8080/oauth2/users");
+                getRedirectStrategy().sendRedirect(request, response, "http://localhost:8080/users/oauth2/users");
                 return;
 
             }

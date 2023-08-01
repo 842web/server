@@ -1,4 +1,3 @@
-src/main/resources/application.yml
 HELP.md
 .gradle
 build/
@@ -37,12 +36,13 @@ out/
 ### VS Code ###
 .vscode/
 
-<<<<<<< HEAD
-<<<<<<< feature/auth
-=======
 ### Custom ###
+<<<<<<< HEAD
 >>>>>>> develop
 ======
 ### Custom ###
 >>>>>>> 701c15e7c86eae67d09b88d9e25104ee3d287da3
 
+=======
+src/main/resources/application.properties
+>>>>>>> master
