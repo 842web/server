@@ -39,9 +39,9 @@ public class PostServiceImpl implements PostService {
     public boolean checkPostAnswer(Long postIdx, String answer) throws BaseException {
         Post post = postRepository.findById(postIdx).get();
 
-        boolean isAnswer = post.getQuestioner_id().equals(answer) || post.getQuestioner_name().equals(answer);
+        boolean isAnswer = post.getQuestionerId().equals(answer) || post.getQuestionerName().equals(answer);
         if (isAnswer) {
-            post.setRead(1);
+            post.setReadInfo(1);
             postRepository.save(post);
 
             return true;

@@ -48,11 +48,11 @@ public class WebSecurityConfigure {
 
         //리소스 인증 및 권한 설정
         http.authorizeRequests()
-                .antMatchers("/oauth2/**").permitAll()
-                .antMatchers("/posts").permitAll()
-                .antMatchers("/images").permitAll()
-                .antMatchers("/terms").permitAll()
-                .anyRequest().authenticated();
+                .antMatchers("/users/oauth2/").permitAll()
+                .antMatchers("/posts/").permitAll()
+                .antMatchers("/images/").permitAll()
+                .antMatchers("/terms/").permitAll()
+                .antMatchers("/postImages/**").authenticated();
 
 
         //oauth2Login 로직 중요!!

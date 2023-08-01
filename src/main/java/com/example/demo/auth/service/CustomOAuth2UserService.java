@@ -68,7 +68,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 .register_id(oAuth2UserInfo.getOAuth2Id())
                 .status(2)
                 .role(Role.ROLE_USER)
-                .platform_info(1)
+                .platform(1)
                 .build();
         return userRepository.save(user);
     }
