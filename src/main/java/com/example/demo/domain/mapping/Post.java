@@ -25,10 +25,10 @@ public class Post extends BaseEntity {
     private Long id;
 
     @Column(length = 50)
-    private String questioner_id;
+    private String questionerId;
 
     @Column(length = 30)
-    private String questioner_name;
+    private String questionerName;
 
     @Column(length = 1000)
     private String question1;
@@ -45,13 +45,13 @@ public class Post extends BaseEntity {
     private Integer status;
 
     @Column(columnDefinition = "DEFAULT -1")
-    private Integer read;
+    private Integer readInfo;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_image_idx")
     private PostImage postImage;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "answerer_idx")
     private User user;
 }

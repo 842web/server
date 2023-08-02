@@ -14,16 +14,17 @@ import javax.persistence.*;
 public class Terms extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "term_idx")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "terms_idx")
     private Long id;
 
     @Column(length = 200)
     private String title;
 
-    private String desc;
+    private String contents;
 
     private Integer status;
 
 
+    //
 }

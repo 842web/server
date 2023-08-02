@@ -40,8 +40,8 @@ public class PostConvertor {
         PostImage postImage = staticPostImageRepository.findById(Long.valueOf(request.getImageIdx())).orElseThrow(()-> new BaseException(Code.POST_IMAGE_NOT_FOUND));
 
         Post post = Post.builder()
-                .questioner_id(request.getQuestioner_id())
-                .questioner_name(request.getQuestioner_name())
+                .questionerId(request.getQuestioner_id())
+                .questionerName(request.getQuestioner_name())
                 .question1(request.getQuestion1())
                 .question2(request.getQuestion2())
                 .question3(request.getQuestion3())
