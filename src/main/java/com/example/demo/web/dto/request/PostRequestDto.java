@@ -1,10 +1,11 @@
-package com.example.demo.web.dto.requestDto;
+package com.example.demo.web.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @ToString
 public class PostRequestDto {
@@ -34,8 +35,8 @@ public class PostRequestDto {
     @Setter
     @ToString
     public static class UpdatePostReadDto{
-        @NotBlank(message = "포스트 인덱스는 필수값입니다.")
-        String postIdx;
+        @NotNull(message = "포스트 인덱스는 필수값입니다.")
+        Long postIdx;
         @NotBlank(message = "답변은 필수값입니다.")
         String answer;
     }

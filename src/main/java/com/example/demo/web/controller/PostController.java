@@ -5,8 +5,8 @@ import com.example.demo.config.base.BaseResponse;
 import com.example.demo.converter.PostConvertor;
 import com.example.demo.domain.mapping.Post;
 import com.example.demo.service.PostService;
-import com.example.demo.web.dto.requestDto.PostRequestDto;
-import com.example.demo.web.dto.responseDto.PostResponseDto;
+import com.example.demo.web.dto.request.PostRequestDto;
+import com.example.demo.web.dto.response.PostResponseDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -75,7 +75,7 @@ public class PostController {
      * */
     @PostMapping("/answer")
     public BaseResponse<String> checkAnswer(@Valid @RequestBody PostRequestDto.UpdatePostReadDto request) throws BaseException {
-        Boolean result = postService.checkPostAnswer(Long.valueOf(request.getPostIdx()), request.getAnswer());
+        Boolean result = postService.checkPostAnswer(request.getPostIdx(), request.getAnswer());
         return new BaseResponse<>(result.toString());
     }
 }
