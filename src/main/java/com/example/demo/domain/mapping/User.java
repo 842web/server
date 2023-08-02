@@ -30,8 +30,8 @@ public class User extends BaseEntity {
 
     private String refresh_token;
 
-    @Column(name = "registrationId")
-    private String register_id;
+
+    private String registration_id;
 
     private String email;
 

@@ -39,7 +39,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 String userName = oAuth2UserRequest.getClientRegistration().getProviderDetails()
                         .getUserInfoEndpoint().getUserNameAttributeName();
 
-                System.out.println("here UserService - process");
                 System.out.println("registerationId: " + registrationId + "userName" + userName);
                 OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfoFactory.getOAuth2UserInfo("KAKAO", oAuth2User.getAttributes());
                 User user = userRepository.findByEmail(oAuth2UserInfo.getEmail()).orElse(null);
@@ -65,7 +64,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         User user = User.builder()
                 .email(oAuth2UserInfo.getEmail())
                 .nickname(oAuth2UserInfo.getName())
-                .register_id(oAuth2UserInfo.getOAuth2Id())
+                .registration_id(oAuth2UserInfo.getOAuth2Id())
                 .status(2)
                 .role(Role.ROLE_USER)
                 .platform_info(1)

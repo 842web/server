@@ -38,12 +38,11 @@ public class SuccessHandler  extends SimpleUrlAuthenticationSuccessHandler {
             Integer status = userRepository.findStatusByEmail(email).get().getStatus();
             //Optional 객체는 이와 같이 .get()하고 .메소드를 사용해 값을 떼오면 된다.
 
-
-            System.out.println("status:" );
             if (response.isCommitted()) {
                 logger.debug("응답이 이미 커밋된 상태입니다. ");
                 return;
             }
+
             if(status ==2){
                 response.getWriter().write(email + "회원가입이 되어 있지 않습니다. 회원가입으로 이동해주세요");
                 System.out.println(" 회원가입으로 이동해주세요");
@@ -51,7 +50,11 @@ public class SuccessHandler  extends SimpleUrlAuthenticationSuccessHandler {
                 return;
 
             }
-            String url = makeRedirectUrl(jwtTokenProvider.generateToken(authentication).getAccessToken());
+
+            String accessToken = String.valueOf(jwtTokenProvider.generateToken(authentication).getAccessToken());
+            String refreshToken = String.valueOf(jwtTokenProvider.generateToken(authentication).getRefreshToken());
+            userRepository.updateUserRefreshToken(refreshToken, email);
+            String url = makeRedirectUrl(accessToken);
             getRedirectStrategy().sendRedirect(request, response, url); //성공 시점에 redirect
 
         }catch (Exception err){

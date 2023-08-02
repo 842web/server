@@ -68,7 +68,6 @@ public class JwtTokenProvider {
                 .setExpiration(new Date(now.getTime() + access_token_validity_in_seconds))  //토큰 만료 시간 설정
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
-        System.out.println("access Token: " + accessToken);
         //Generate RefreshToken
         String refreshToken = Jwts.builder()
                 .claim("type", TYPE_REFRESH)
@@ -77,7 +76,6 @@ public class JwtTokenProvider {
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
-        System.out.println("refresh Token: " + accessToken);
         return UserResponseDto.TokenInfo.builder()
                 .grantType(BEARER_TYPE)
                 .accessToken(accessToken)
