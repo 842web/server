@@ -1,11 +1,11 @@
-package com.example.demo.config;
+package com.example.demo.config.base;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import static com.example.demo.config.BaseResponseStatus.SUCCESS;
+import static com.example.demo.config.base.Code.SUCCESS;
 
 @Getter
 @AllArgsConstructor
@@ -27,12 +27,16 @@ public class BaseResponse<T> {
     }
 
     // 요청에 실패한 경우
-    public BaseResponse(BaseResponseStatus status) {
+    public BaseResponse(Code status) {
         this.isSuccess = status.isSuccess();
         this.message = status.getMessage();
         this.code = status.getCode();
     }
 
-
+    public BaseResponse(Code status, String message) {
+        this.isSuccess = status.isSuccess();
+        this.message = message;
+        this.code = status.getCode();
+    }
 }
 

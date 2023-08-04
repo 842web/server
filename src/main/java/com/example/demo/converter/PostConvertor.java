@@ -1,12 +1,14 @@
 package com.example.demo.converter;
 
+import com.example.demo.config.base.BaseException;
+import com.example.demo.config.base.Code;
 import com.example.demo.domain.mapping.Post;
 import com.example.demo.domain.mapping.PostImage;
 import com.example.demo.domain.mapping.User;
 import com.example.demo.repository.PostImageRepository;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.web.dto.requestDto.PostRequestDto;
-import com.example.demo.web.dto.responseDto.PostResponseDto;
+import com.example.demo.web.dto.request.PostRequestDto;
+import com.example.demo.web.dto.response.PostResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -33,9 +35,9 @@ public class PostConvertor {
         staticPostImageRepository = this.postImageRepository;
     }
 
-    public static Post toPost(PostRequestDto.CreatePostDto request) {
-        User user = staticUserRepository.findById(Long.valueOf(request.getAnswerer_idx())).get();
-        PostImage postImage = staticPostImageRepository.findById(Long.valueOf(request.getImageIdx())).get();
+    public static Post toPost(PostRequestDto.CreatePostDto request) throws BaseException {
+        User user = staticUserRepository.findById(Long.valueOf(request.getAnswerer_idx())).orElseThrow(()-> new BaseException(Code.USER_NOT_FOUND));
+        PostImage postImage = staticPostImageRepository.findById(Long.valueOf(request.getImageIdx())).orElseThrow(()-> new BaseException(Code.POST_IMAGE_NOT_FOUND));
 
         Post post = Post.builder()
                 .questionerId(request.getQuestioner_id())

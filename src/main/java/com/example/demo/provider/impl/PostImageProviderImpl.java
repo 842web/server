@@ -1,7 +1,7 @@
 package com.example.demo.provider.impl;
 
-import com.example.demo.config.BaseException;
-import com.example.demo.config.BaseResponseStatus;
+import com.example.demo.config.base.BaseException;
+import com.example.demo.config.base.Code;
 import com.example.demo.domain.mapping.PostImage;
 import com.example.demo.provider.PostImageProvider;
 import com.example.demo.repository.PostImageRepository;
@@ -19,7 +19,7 @@ public class PostImageProviderImpl implements PostImageProvider {
         try {
             return postImageRepository.findAll();
         } catch (Exception exception) {
-            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+            throw new BaseException(Code.DATABASE_ERROR);
         }
     }
 }

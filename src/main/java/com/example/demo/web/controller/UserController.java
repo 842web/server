@@ -1,6 +1,6 @@
 package com.example.demo.web.controller;
 
-import com.example.demo.config.BaseResponse;
+import com.example.demo.config.base.BaseResponse;
 import com.example.demo.domain.mapping.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
