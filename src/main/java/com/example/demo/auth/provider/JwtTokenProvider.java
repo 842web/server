@@ -56,7 +56,42 @@ public class JwtTokenProvider {
         String authorities = inputAuthorities.stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
+        Date now = new Date();
 
+        //accessToken 생성
+        String accessToken = Jwts.builder()
+                .setSubject(name)
+                .claim(AUTHORITIES_KEY, authorities)
+                .claim("type", TYPE_ACCESS)
+                .setIssuedAt(now)   //토큰 발행 시간 정보
+                .setExpiration(new Date(now.getTime() + access_token_validity_in_seconds))  //토큰 만료 시간 설정
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+        System.out.println("access Token: " + accessToken);
+        //Generate RefreshToken
+        String refreshToken = Jwts.builder()
+                .claim("type", TYPE_REFRESH)
+                .setIssuedAt(now)   //토큰 발행 시간 정보
+                .setExpiration(new Date(now.getTime() +refresh_token_validity_in_seconds)) //토큰 만료 시간 설정
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+
+
+        return UserResponseDto.TokenInfo.builder()
+                .grantType(BEARER_TYPE)
+                .accessToken(accessToken)
+                .accessTokenExpirationTime(access_token_validity_in_seconds)
+                .refreshToken(refreshToken)
+                .refreshTokenExpirationTime(refresh_token_validity_in_seconds)
+                .build();
+
+    }
+
+    //회원가입
+    public UserResponseDto.TokenInfo generateToken(String name)
+    {
+
+        String authorities = "ROLE_USER";
         Date now = new Date();
 
         //accessToken 생성
@@ -87,6 +122,7 @@ public class JwtTokenProvider {
                 .build();
 
     }
+
 
     //JWT 토큰을 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드
     public Authentication getAuthentication(String accessToken) {

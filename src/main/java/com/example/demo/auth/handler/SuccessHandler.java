@@ -44,6 +44,7 @@ public class SuccessHandler  extends SimpleUrlAuthenticationSuccessHandler {
                 logger.debug("응답이 이미 커밋된 상태입니다. ");
                 return;
             }
+            String url = makeRedirectUrl(jwtTokenProvider.generateToken(authentication).getAccessToken());
             if(status ==2){
                 response.getWriter().write(email + "회원가입이 되어 있지 않습니다. 회원가입으로 이동해주세요");
                 System.out.println(" 회원가입으로 이동해주세요");
@@ -51,7 +52,7 @@ public class SuccessHandler  extends SimpleUrlAuthenticationSuccessHandler {
                 return;
 
             }
-            String url = makeRedirectUrl(jwtTokenProvider.generateToken(authentication).getAccessToken());
+
             getRedirectStrategy().sendRedirect(request, response, url); //성공 시점에 redirect
 
         }catch (Exception err){

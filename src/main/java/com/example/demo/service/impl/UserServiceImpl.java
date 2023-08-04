@@ -42,4 +42,29 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.findById(userId).get().getLink_info();
     }
+
+    @Override
+    public String updateUsernickname(String nickname, Long userId){
+
+        userRepository.updateUserNickname(nickname, userId);
+
+        return userRepository.findById(userId).get().getNickname();
+    };
+
+    @Override
+    public String updateUserInstagram_id(String instagram_id, Long userId){
+
+        userRepository.updateUserInstagramId(instagram_id,userId);
+
+        return userRepository.findById(userId).get().getInstagram_id();
+    };
+
+
+    @Override
+    public String findUserLink(Long userId){
+
+        return userRepository.findById(userId).get().getLink_info();
+    };
+
 }
+
