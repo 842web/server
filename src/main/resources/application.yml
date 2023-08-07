@@ -1,9 +1,12 @@
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/umc_4?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: root
-    password: 58859476
+    url: ${RDS_URL}
+    username: ${RDS_USERNAME}
+    password: ${RDS_PASSWORD}
 
 
   jpa:
@@ -12,7 +15,7 @@ spring:
       ddl-auto: update
       #naming:
        #physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-      use-new-id-generator-mappings: false
+      #use-new-id-generator-mappings: false
     show-sql: true
     properties:
       hibernate.format_sql: true
@@ -21,22 +24,22 @@ spring:
 
   logging:
     level:
-      org.hibernate.SQL: debug
+      org.springframework: DEBUG
 
   security:
     oauth2:
       client:
         registration:
           kakao:
-            client-id: cb28ff3468d7eea6511f5c4097877946
-            client-secret: b9gxFgAB7TIN5ZaT4KUVMia9lbTaYAxH
-            redirect-uri: http://localhost:8080/oauth2/callback
+            client-id:  ${KAKAO_CLIENT_ID}
+            client-secret:  ${KAKAO_CLIENT_SECRET}
+            redirect-uri: "http://localhost:8080/oauth2/callback"
             client-authentication-method: POST
             authorization-grant-type: authorization_code
             scope:
             - profile_nickname
             - account_email
-            client-name: kakao
+            client-name: Kakao
         provider:
           kakao:
             authorization-uri: https://kauth.kakao.com/oauth/authorize
@@ -44,7 +47,8 @@ spring:
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
 
+
 jwt:
-  secret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHadfafefdfaefdfaefdawecbnh
+  secret: ${JWT_SECRET}
   access-token-validity-in-seconds: 3600000
   refresh-token-validity-in-seconds: 259200000

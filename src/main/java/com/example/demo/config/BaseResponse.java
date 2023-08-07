@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
+
 import static com.example.demo.config.BaseResponseStatus.SUCCESS;
 
 @Getter
@@ -13,7 +15,9 @@ import static com.example.demo.config.BaseResponseStatus.SUCCESS;
 public class BaseResponse<T> {
     @JsonProperty("isSuccess")
     private final Boolean isSuccess;
+    @JsonProperty("message")
     private final String message;
+    @JsonProperty("code")
     private final int code;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private T result;
@@ -31,6 +35,12 @@ public class BaseResponse<T> {
         this.isSuccess = status.isSuccess();
         this.message = status.getMessage();
         this.code = status.getCode();
+    }
+
+    public BaseResponse(Boolean isSuccess, String message, int status) {
+        this.isSuccess = isSuccess;
+        this.message = message;
+        this.code = status;
     }
 
 

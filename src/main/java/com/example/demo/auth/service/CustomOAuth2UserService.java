@@ -49,9 +49,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                     System.out.println("already Join");
                 } else {
                     //회원가입 진행할 것
-
                     user = registerUser(oAuth2UserInfo);
-
                 }
                 return UserPrincipal.create(user, oAuth2UserInfo.getAttributes());
             }catch (Exception e){

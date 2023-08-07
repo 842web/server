@@ -20,4 +20,14 @@ public class UserConverter {
 
     }
 
+    public static UserResponseDto.UserWithdrawDto toWirthdrawDto(int status, String nickname){
+
+        return UserResponseDto.UserWithdrawDto.builder()
+                .status(status)
+                .nick_name(nickname)
+                .build();
+    }
+
+
+
 }

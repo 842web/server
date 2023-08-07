@@ -66,5 +66,14 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(userId).get().getLink_info();
     };
 
+    @Override
+    public Integer updateUserStatus(int i, Long userId){
+
+        userRepository.updateUser_Status(i, userId);
+        return userRepository.findById(userId).get().getStatus();
+    };
+
+
+
 }
 

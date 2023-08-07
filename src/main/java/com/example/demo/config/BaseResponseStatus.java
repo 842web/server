@@ -1,12 +1,14 @@
 package com.example.demo.config;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
 /**
  * 에러 코드 관리
  */
 @Getter
+
 public enum BaseResponseStatus {
     /**
      * 200 : 요청 성공
@@ -20,10 +22,19 @@ public enum BaseResponseStatus {
     // Common
     REQUEST_ERROR(false, HttpStatus.BAD_REQUEST.value(), "입력값을 확인해주세요."),
     WRONG_TYPE(false, HttpStatus.BAD_REQUEST.value(), "잘못된 형식입니다."),
-    EMPTY_JWT(false, HttpStatus.UNAUTHORIZED.value(), "JWT를 입력해주세요."),
+    EMPTY_JWT(false, HttpStatus.UNAUTHORIZED.value(), "JWT IS EMPTY"),
     INVALID_JWT(false, HttpStatus.UNAUTHORIZED.value(), "유효하지 않은 JWT입니다."),
     INVALID_USER_JWT(false,HttpStatus.FORBIDDEN.value(),"권한이 없는 유저의 접근입니다."),
+    EXPIRED_JWT(false, HttpStatus.UNAUTHORIZED.value(),"만료된 JWT입니다."),
+    UNSUPPORTED_JWT(false, HttpStatus.UNAUTHORIZED.value(),"유효하지 않는 JWT 타입입니다."),
+    ILLEGAL_JWT(false, HttpStatus.UNAUTHORIZED.value(),"JWT claims이 비어있습니다."),
+    SIGNATURE_FAILE_JWT(false, HttpStatus.UNAUTHORIZED.value(),"JWT 서명 인증에 실패했습니다."),
+    WRONG_JWT(false, HttpStatus.UNAUTHORIZED.value(),"JWT 관련 오류입니다."),
     RESPONSE_ERROR(false, HttpStatus.NOT_FOUND.value(), "값을 불러오는데 실패하였습니다."),
+
+    EMPTY_REFRESH_TOKEN(false, HttpStatus.UNAUTHORIZED.value(),"Refresh Token이 입력되지 않았습니다."),
+    INVALID_REFRESH_TOKEN(false, HttpStatus.UNAUTHORIZED.value(),"사용자의 Refresh Token과 일치하지 않습니다."),
+
 
     INVALID_USER_NO(false, HttpStatus.BAD_REQUEST.value(), "잘못된 형식의 유저 번호입니다."),
     INVALID_IDX(false, HttpStatus.BAD_REQUEST.value(), "잘못된 형식의 인덱스입니다."),

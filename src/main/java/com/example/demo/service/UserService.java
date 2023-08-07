@@ -15,4 +15,6 @@ public interface UserService {
     String updateUserInstagram_id(String instagram_id, Long userId);
 
     String findUserLink(Long userId);
+
+    Integer updateUserStatus(int i, Long userId);
 }
