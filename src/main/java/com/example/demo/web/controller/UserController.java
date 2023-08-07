@@ -64,6 +64,7 @@ public class UserController {
                 ;
             }
 
+
             //board_img set
 
             Long board_id = request.getBoardImage().getId();
