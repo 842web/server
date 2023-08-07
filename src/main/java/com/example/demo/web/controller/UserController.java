@@ -1,11 +1,13 @@
 package com.example.demo.web.controller;
 
+
 import com.example.demo.auth.provider.JwtTokenProvider;
-import com.example.demo.config.BaseException;
-import com.example.demo.config.BaseResponse;
 import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.config.CustomAuthenticationException;
 import com.example.demo.converter.UserConverter;
+
+import com.example.demo.config.base.BaseResponse;
+
 import com.example.demo.domain.mapping.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
@@ -130,7 +132,7 @@ public class UserController {
      * @return BaseResponse<String>
      * */
     @GetMapping("/autologin")
-    public BaseResponse<UserResponseDto.TokenInfo> UserDetailsTokenInfo(@RequestHeader(value = "Authorization") String authorizationHeader, @RequestHeader(value = "Refresh-Token",required = false) String RefreshHeader, HttpServletRequest request) throws BaseException {
+    public BaseResponse<UserResponseDto.TokenInfo> UserDetailsTokenInfo(@RequestHeader(value = "Authorization") String authorizationHeader, @RequestHeader(value = "Refresh-Token",required = false) String RefreshHeader, HttpServletRequest request) {
         try {
             //access token 이 만료되었으니 jwtfilter를 정상적으로 통과할 수 없을 것이다. 따라서 jwtfilter에서 제외해주어야 한다.
             //따라서 access token 에 대해 check하는 기능이 필요하다.
@@ -144,7 +146,6 @@ public class UserController {
             jwtTokenProvider.validateAccessToken(access_token);
             if (RefreshHeader == null) {
                 System.out.println("here");
-                throw new BaseException(EMPTY_REFRESH_TOKEN);
             }
             //refersh token 전형 vaildaToken 이 필요할 듯
             jwtTokenProvider.RefreshValidateToken(RefreshHeader);
@@ -163,7 +164,7 @@ public class UserController {
                 return new BaseResponse<>(jwtTokenProvider.generateAccessToken(user_email));
             } else {
                 System.out.println("refresh token 불일치");
-                return new BaseResponse<>(BaseResponseStatus.INVALID_REFRESH_TOKEN);
+                return new BaseResponse(BaseResponseStatus.INVALID_REFRESH_TOKEN);
             }
 
 

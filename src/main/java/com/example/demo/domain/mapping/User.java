@@ -19,7 +19,7 @@ public class User extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_img_idx")
+    @JoinColumn(name = "board_image_idx")
     private BoardImage boardImage;
 
     @Column(length = 30)
@@ -30,14 +30,13 @@ public class User extends BaseEntity {
 
     private String refresh_token;
 
-    @Column(name = "registrationId")
+    @Column(name = "register_id")
     private String register_id;
 
     private String email;
+    private Integer platform;
 
-    private Integer platform_info;
-
-    private String link_info;
+    private String Link_info;
 
     private Integer status;
 

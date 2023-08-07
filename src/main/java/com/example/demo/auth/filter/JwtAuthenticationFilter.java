@@ -1,8 +1,7 @@
 package com.example.demo.auth.filter;
 
 import com.example.demo.auth.provider.JwtTokenProvider;
-import com.example.demo.config.BaseException;
-import com.example.demo.config.BaseResponse;
+
 import com.example.demo.config.CustomAuthenticationException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

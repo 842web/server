@@ -67,7 +67,15 @@ public class WebSecurityConfigure {
                 //세션 사용하지 않음 >> JWT 등을 사용할 때 사용하는 것
 
         //리소스 인증 및 권한 설정
+
         http.authorizeRequests().antMatchers("/").permitAll();
+
+        http.authorizeRequests()
+                .antMatchers("/users/oauth2/").permitAll()
+                .antMatchers("/posts/").permitAll()
+                .antMatchers("/images/").permitAll()
+                .antMatchers("/terms/").permitAll()
+                .antMatchers("/postImages/**").authenticated();
 
 
         //

@@ -2,8 +2,6 @@ package com.example.demo.auth.handler;
 
 import com.example.demo.auth.provider.JwtTokenProvider;
 
-import com.example.demo.config.BaseResponse;
-import com.example.demo.domain.mapping.User;
 import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +15,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
-import static com.example.demo.config.BaseResponseStatus.IS_NOT_JOIN_US;
 
 @Slf4j
 @Component

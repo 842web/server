@@ -3,7 +3,6 @@ package com.example.demo.auth.service;
 import com.example.demo.auth.Info.OAuth2UserInfo;
 import com.example.demo.auth.Info.OAuth2UserInfoFactory;
 import com.example.demo.auth.UserPrincipal;
-import com.example.demo.config.BaseResponse;
 import com.example.demo.domain.mapping.Role;
 import com.example.demo.domain.mapping.User;
 import com.example.demo.repository.UserRepository;
@@ -14,7 +13,6 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import static com.example.demo.config.BaseResponseStatus.IS_NOT_JOIN_US;
 
 @RequiredArgsConstructor
 @Service
@@ -66,7 +64,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 .register_id(oAuth2UserInfo.getOAuth2Id())
                 .status(2)
                 .role(Role.ROLE_USER)
-                .platform_info(1)
+                .platform(1)
                 .build();
         return userRepository.save(user);
     }

@@ -1,7 +1,6 @@
 package com.example.demo.auth.handler;
 
-import com.example.demo.config.BaseException;
-import com.example.demo.config.BaseResponse;
+
 import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.config.CustomAuthenticationException;
 import org.springframework.security.core.AuthenticationException;
