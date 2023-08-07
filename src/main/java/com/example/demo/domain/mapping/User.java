@@ -36,7 +36,11 @@ public class User extends BaseEntity {
     private String email;
     private Integer platform;
 
+
     private String Link_info;
+
+
+
 
     private Integer status;
 
