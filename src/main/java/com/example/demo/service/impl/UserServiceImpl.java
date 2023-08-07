@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+import static org.apache.tomcat.util.net.openssl.ciphers.Encryption.AES256;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -30,4 +32,48 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.findById(userId).get().getBoardImage().getId();
     }
+
+    @Override
+    public String createUserLink(Long userId){
+
+        //userid에 대해 암호화한 문자열로 링크를 생성한다.
+
+
+
+        return userRepository.findById(userId).get().getLink_info();
+    }
+
+    @Override
+    public String updateUsernickname(String nickname, Long userId){
+
+        userRepository.updateUserNickname(nickname, userId);
+
+        return userRepository.findById(userId).get().getNickname();
+    };
+
+    @Override
+    public String updateUserInstagram_id(String instagram_id, Long userId){
+
+        userRepository.updateUserInstagramId(instagram_id,userId);
+
+        return userRepository.findById(userId).get().getInstagram_id();
+    };
+
+
+    @Override
+    public String findUserLink(Long userId){
+
+        return userRepository.findById(userId).get().getLink_info();
+    };
+
+    @Override
+    public Integer updateUserStatus(int i, Long userId){
+
+        userRepository.updateUser_Status(i, userId);
+        return userRepository.findById(userId).get().getStatus();
+    };
+
+
+
 }
+

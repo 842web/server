@@ -26,4 +26,13 @@ public class UserRequestDto {
 
     }
 
+    @Getter @Setter
+    public static class ModifyUserDto{
+
+        private String nickname;
+
+        private String instagram_id;
+
+    }
+
 }
