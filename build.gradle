@@ -52,6 +52,11 @@ dependencies {
 	// Swagger
 	implementation ('org.springdoc:springdoc-openapi-ui:1.6.15')
 	//implementation 'io.springfox:springfox-boot-starter:3.0.0'
+
+
+	//batch
+	implementation ('org.springframework.boot:spring-boot-starter-batch')
+
 }
 
 tasks.named('test') {

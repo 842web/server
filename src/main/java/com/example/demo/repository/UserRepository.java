@@ -43,4 +43,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying @Transactional
     @Query("update User set status = :status , updated_At = current_timestamp where id = :userId")
     void updateUser_Status(@Param(value = "status") int i, @Param(value = "userId") Long userId);
+
+
+    @Query("select count(id) from User where status = 3 and datediff(current_timestamp, updated_At) = 60")
+    Long countAllByStatusAndUpdated_At();
+
+    @Modifying
+    @Query("delete from User where status = 3 and datediff(current_timestamp, updated_At) = 60")
+    void deleteAllByDay();
 }
