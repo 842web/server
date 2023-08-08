@@ -40,7 +40,9 @@ public enum Code {
      */
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, false, 5000, "서버 내부에서 에러가 발생했습니다."),
     DATABASE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, false, 5001, "데이터베이스 연결에 실패하였습니다."),
-    SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, false, 5002, "서버와의 연결에 실패하였습니다.");
+    SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, false, 5002, "서버와의 연결에 실패하였습니다."),
+    IMAGE_DELETE_FAIL(HttpStatus.INTERNAL_SERVER_ERROR, false, 5003, "이미지 삭제에 실패하였습니다");
+
 
     private final HttpStatus httpStatus;
     private final boolean isSuccess;
