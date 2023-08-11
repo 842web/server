@@ -16,10 +16,10 @@ public abstract class BaseEntity {
 
 
     @CreatedDate
-    private LocalDateTime created_At;
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
-    private  LocalDateTime updated_At;
+    private  LocalDateTime updatedAt;
 
 
 }

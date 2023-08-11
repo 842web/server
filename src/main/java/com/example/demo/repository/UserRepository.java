@@ -25,30 +25,31 @@ public interface UserRepository extends JpaRepository<User, Long> {
     void updateUserBoardId(@Param(value = "board_id") Long board_id, @Param(value = "userId") Long userId);
 
     @Modifying@Transactional
-    @Query("update User set created_At = current_timestamp where id = :userId ")
+    @Query("update User set createdAt = current_timestamp , updatedAt = current_timestamp where id = :userId ")
     void updateUserCreateAt(@Param(value = "userId") Long userId);
 
     @Modifying @Transactional
-    @Query("update User set updated_At = current_timestamp where id = :userId")
+    @Query("update User set createdAt = current_timestamp , updatedAt  = current_timestamp where id = :userId")
     void updateUserUpdatedAt(@Param(value = "userId")Long userId);
 
     @Modifying @Transactional
-    @Query("update User set refresh_token = :refresh_token where id = :userId")
+    @Query("update User set refresh_token = :refresh_token , updatedAt = current_timestamp where id = :userId")
     void updateUserRefreshToken(@Param(value = "refresh_token")String refresh_token, @Param(value = "userId")Long userId);
 
     @Modifying @Transactional
-    @Query("update User set nickname = :nickname where id = :userId")
+    @Query("update User set nickname = :nickname , updatedAt  = current_timestamp where id = :userId")
     void updateUserNickname(@Param(value = "nickname") String nickname, @Param(value = "userId") Long userId);
 
     @Modifying @Transactional
-    @Query("update User set status = :status , updated_At = current_timestamp where id = :userId")
+    @Query("update User set status = :status , updatedAt  = current_timestamp where id = :userId")
     void updateUser_Status(@Param(value = "status") int i, @Param(value = "userId") Long userId);
 
 
-    @Query("select count(id) from User where status = 3 and datediff(current_timestamp, updated_At) = 60")
+    @Query("select count(id) from User where status = 3 and datediff(current_timestamp, updatedAt ) = 60")
     Long countAllByStatusAndUpdated_At();
 
     @Modifying
-    @Query("delete from User where status = 3 and datediff(current_timestamp, updated_At) = 60")
+    @Transactional
+    @Query("delete from User where status = 3 and datediff(current_timestamp, updatedAt ) = 60")
     void deleteAllByDay();
 }

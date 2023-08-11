@@ -1,5 +1,6 @@
 package com.example.demo.batch;
 
+import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
@@ -11,34 +12,34 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityManager;
+
 
 @RequiredArgsConstructor
 @Configuration
-public class Myjob {
+public class UserWithdrawBatch {
 
     private final JobBuilderFactory jobBuilderFactory;
 
     private final StepBuilderFactory stepBuilderFactory;
 
-    private final EntityManagerFactory entityManagerFactory;
-
     private final UserRepository userRepository;
+    private final PostRepository postRepository;
 
-    @Bean(name = "myJob_job1")
-    Job MyJob_job1(){
+    @Bean(name = "UserWithdraw_job1")
+    Job UserWithdraw_job1(){
 
-        return jobBuilderFactory.get("myJob_job1")
-                .start(myJob_job1_step1())
-                .next(myJob_job1_step2())
+        return jobBuilderFactory.get("UserWithdraw_job1")
+                .start(UserWithdraw_job1_step1())
+                .next(UserWithdraw_job1_step2())
                 .build();
     }
 
     @Bean
     @JobScope
-    Step myJob_job1_step1(){
+    Step UserWithdraw_job1_step1(){
 
-        return stepBuilderFactory.get("myJob_job1_step1")
+        return stepBuilderFactory.get("UserWithdraw_job1_step1")
                 .tasklet((stepContribution, chunkContext)->{
 
                     Long UserCount = userRepository.countAllByStatusAndUpdated_At();
@@ -55,11 +56,12 @@ public class Myjob {
 
     @Bean
     @JobScope
-    Step myJob_job1_step2(){
+    Step UserWithdraw_job1_step2(){
 
-        return stepBuilderFactory.get("myJob_job1_step2")
+        return stepBuilderFactory.get("UserWithdraw_job1_step2")
                 .tasklet((stepContribution, chunkContext)->{
 
+                    postRepository.findAll();
                     userRepository.deleteAllByDay();
 
                     return RepeatStatus.FINISHED;

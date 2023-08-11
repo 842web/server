@@ -5,6 +5,8 @@ import com.example.demo.domain.common.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -24,6 +26,9 @@ public class Terms extends BaseEntity {
     private String contents;
 
     private Integer status;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE,mappedBy = "terms")
+    private List<userHasTerms> userHasTermsList = new ArrayList<>();
 
 
     //
