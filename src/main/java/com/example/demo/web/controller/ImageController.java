@@ -3,6 +3,7 @@ package com.example.demo.web.controller;
 import com.example.demo.config.base.BaseException;
 import com.example.demo.config.base.BaseResponse;
 import com.example.demo.config.base.Code;
+import com.example.demo.domain.mapping.PostImage;
 import com.example.demo.service.ImageService;
 import com.example.demo.web.dto.request.ImageRequestDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,7 +38,7 @@ public class ImageController {
     /**
      * 이미지 조회 API
      * [GET] /images/?dirName=
-     * @return BaseResponse<List<Image>>
+     * @return BaseResponse<List<String>>
      * */
     @GetMapping("")
     public BaseResponse<ArrayList<String>> getImages(@RequestParam String dirName) throws BaseException {
@@ -63,4 +64,14 @@ public class ImageController {
         return new BaseResponse<>("이미지 삭제에 성공하였습니다. ");
     }
 
+    /**
+     * 포스트 이미지 조회 API
+     * [GET] /images/post
+     * @return BaseResponse<List<PostImage>>
+     * */
+    @GetMapping("/post")
+    public BaseResponse<ArrayList<PostImage>> getPostImages() throws BaseException {
+        ArrayList<PostImage> imageList = imageService.getPostImages();
+        return new BaseResponse<>(imageList);
+    }
 }

@@ -4,9 +4,12 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.example.demo.config.base.BaseException;
 import com.example.demo.config.base.Code;
+import com.example.demo.domain.mapping.PostImage;
+import com.example.demo.repository.PostImageRepository;
 import com.example.demo.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +24,9 @@ import java.util.Date;
 @Service
 public class ImageServiceImpl implements ImageService {
     private final AmazonS3 amazonS3Client;
+
+    @Autowired
+    PostImageRepository postImageRepository;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -69,6 +75,11 @@ public class ImageServiceImpl implements ImageService {
             list.add(url);
         }
         return list;
+    }
+
+    @Override
+    public ArrayList<PostImage> getPostImages() {
+        return (ArrayList<PostImage>) postImageRepository.findAll();
     }
 
 }

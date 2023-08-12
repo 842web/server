@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.config.base.BaseException;
+import com.example.demo.domain.mapping.PostImage;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,4 +28,10 @@ public interface ImageService {
      * 해당 디렉토리에 존재하는 모든 파일을 읽어오는 함수
      * */
     ArrayList<String> getImages (String dirName) throws BaseException;
+
+    /**
+     * 포스트 이미지 조회
+     * 포스트 이미지 목록을 조회하는 함수
+     * */
+    ArrayList<PostImage> getPostImages() throws BaseException;
 }
