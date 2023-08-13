@@ -3,6 +3,8 @@ package com.example.demo.domain.mapping;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -17,4 +19,5 @@ public class PostImage {
     private Long id;
 
     private String url;
+
 }

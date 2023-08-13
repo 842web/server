@@ -23,7 +23,7 @@ public class Admin extends BaseEntity {
 
     private Integer status;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_idx")
     private User user;
 

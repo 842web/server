@@ -4,6 +4,8 @@ import com.example.demo.domain.common.BaseEntity;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 
@@ -11,7 +13,6 @@ import javax.persistence.*;
 @Builder
 @Getter
 @Setter
-@ToString
 @DynamicInsert
 @DynamicUpdate
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -41,10 +42,10 @@ public class Post extends BaseEntity {
 
     private String imageUrl;
 
-    @Column(columnDefinition = "DEFAULT 1")
+    @Column(columnDefinition = "INT DEFAULT 1")
     private Integer status;
 
-    @Column(columnDefinition = "DEFAULT -1")
+    @Column(columnDefinition = "INT DEFAULT -1")
     private Integer readInfo;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -53,5 +54,6 @@ public class Post extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "answerer_idx")
-    private User user;
+    User user;
+
 }
