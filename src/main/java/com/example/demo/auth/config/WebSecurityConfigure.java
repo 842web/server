@@ -5,6 +5,7 @@ import com.example.demo.auth.handler.FailureHandler;
 import com.example.demo.auth.handler.SuccessHandler;
 import com.example.demo.auth.provider.JwtTokenProvider;
 import com.example.demo.auth.service.CustomOAuth2UserService;
+import com.example.demo.config.exception.ExceptionFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -68,11 +69,13 @@ public class WebSecurityConfigure {
                     //.failureHandler(failureHandler);
 
 
-        //jwt filter 설정
-        http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+        // filter 설정 (1) JWT Filter -> (2) Exception Filter
+        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtTokenProvider);
+        ExceptionFilter exceptionFilter = new ExceptionFilter();
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(exceptionFilter, JwtAuthenticationFilter.class);
 
         return http.build(); //??에러 안나게 일단 넣어는 놓았다.
-
     }
 
 }

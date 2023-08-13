@@ -1,5 +1,8 @@
-package com.example.demo.config.base;
+package com.example.demo.config.exception;
 
+import com.example.demo.config.base.BaseException;
+import com.example.demo.config.base.BaseResponse;
+import com.example.demo.config.base.Code;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.http.HttpHeaders;
@@ -14,6 +17,8 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.NestedServletException;
+
+import javax.servlet.ServletException;
 
 
 @Slf4j
@@ -40,9 +45,9 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     // MaxUploadSizeExceededException Handler
-    @org.springframework.web.bind.annotation.ExceptionHandler(value = NestedServletException.class)
-    public ResponseEntity<Object> handleMaxUploadSizeExceededException(NestedServletException e, RedirectAttributes redirectAttributes) {
-        log.error(">>> FileSizeLimitExceededException" );
+    @org.springframework.web.bind.annotation.ExceptionHandler(value = IllegalStateException.class)
+    public ResponseEntity<Object> handleMaxUploadSizeExceededException(IllegalStateException e, RedirectAttributes redirectAttributes) {
+        log.error(">>> ServletException");
         e.printStackTrace();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BaseResponse<>(Code.EXCEED_MAX_FILE_SIZE));
     }
