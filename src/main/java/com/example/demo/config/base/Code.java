@@ -24,16 +24,18 @@ public enum Code {
     INVALID_JWT(HttpStatus.UNAUTHORIZED, false, 4003, "유효하지 않은 JWT입니다."),
     INVALID_USER_JWT(HttpStatus.UNAUTHORIZED, false, 4004,"권한이 없는 유저의 접근입니다."),
     RESPONSE_ERROR(HttpStatus.NOT_FOUND, false, 4005, "값을 불러오는데 실패하였습니다."),
+    EXCEED_MAX_FILE_SIZE(HttpStatus.BAD_REQUEST, false, 4006, "업로드할 수 있는 파일의 최대 크기를 초과하였습니다."),
 
     // INVALID
-    INVALID_USER_NO(HttpStatus.BAD_REQUEST, false, 4006, "잘못된 형식의 유저 번호입니다."),
-    INVALID_IDX(HttpStatus.BAD_REQUEST, false, 4007, "잘못된 형식의 인덱스입니다."),
-    INVALID_PAGE_NO(HttpStatus.BAD_REQUEST, false, 4008, "잘못된 페이지 번호입니다."),
+    INVALID_USER_NO(HttpStatus.BAD_REQUEST, false, 4007, "잘못된 형식의 유저 번호입니다."),
+    INVALID_IDX(HttpStatus.BAD_REQUEST, false, 4008, "잘못된 형식의 인덱스입니다."),
+    INVALID_PAGE_NO(HttpStatus.BAD_REQUEST, false, 4009, "잘못된 페이지 번호입니다."),
+    INVALID_FILE_TYPE(HttpStatus.BAD_REQUEST, false, 4010, "지원하지 않는 파일 형식입니다."),
 
     // NOT FOUND
-    POST_NOT_FOUND(HttpStatus.BAD_REQUEST, false,  4009, "포스트가 존재하지 않습니다."),
-    USER_NOT_FOUND(HttpStatus.BAD_REQUEST, false,  4010, "유저가 존재하지 않습니다."),
-    POST_IMAGE_NOT_FOUND(HttpStatus.BAD_REQUEST, false,  4011, "포스트 이미지가 존재하지 않습니다."),
+    POST_NOT_FOUND(HttpStatus.BAD_REQUEST, false,  4011, "포스트가 존재하지 않습니다."),
+    USER_NOT_FOUND(HttpStatus.BAD_REQUEST, false,  4012, "유저가 존재하지 않습니다."),
+    POST_IMAGE_NOT_FOUND(HttpStatus.BAD_REQUEST, false,  4013, "포스트 이미지가 존재하지 않습니다."),
 
     /**
      * 50 : Database, Server 오류

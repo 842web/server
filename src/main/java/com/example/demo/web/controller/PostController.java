@@ -2,9 +2,12 @@ package com.example.demo.web.controller;
 
 import com.example.demo.config.base.BaseException;
 import com.example.demo.config.base.BaseResponse;
+import com.example.demo.config.base.Code;
 import com.example.demo.converter.PostConvertor;
 import com.example.demo.domain.mapping.Post;
+import com.example.demo.service.ImageService;
 import com.example.demo.service.PostService;
+import com.example.demo.utils.ValidationRegex;
 import com.example.demo.web.dto.request.PostRequestDto;
 import com.example.demo.web.dto.response.PostResponseDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,10 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
 
 
 @Slf4j
@@ -30,14 +34,25 @@ public class PostController {
     @Autowired
     private final PostService postService;
 
+    @Autowired
+    private final ImageService imageService;
+
     /**
      * 포스트 작성 API
      * [POST] /posts
      * @return BaseResponse<String>
      * */
+    @Valid
     @PostMapping("")
-    public BaseResponse<String> writePost(@Valid @RequestBody PostRequestDto.CreatePostDto request) throws BaseException {
-        Long post_id = postService.savePost(PostConvertor.toPost(request));
+    public BaseResponse<String> writePost(@RequestPart("image") MultipartFile image, @RequestPart("postDto") @Valid PostRequestDto.CreatePostDto createPostDto) throws BaseException, IOException {
+        if (!ValidationRegex.isImageFile(image)) throw new BaseException(Code.INVALID_FILE_TYPE);
+
+        String imageUrl = imageService.uploadImage(image, "image");
+
+        Post post = PostConvertor.toPost(createPostDto);
+        post.setImageUrl(imageUrl);
+
+        Long post_id = postService.savePost(post);
         return new BaseResponse<>(post_id.toString());
     }
 

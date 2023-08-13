@@ -45,7 +45,6 @@ public class PostConvertor {
                 .question1(request.getQuestion1())
                 .question2(request.getQuestion2())
                 .question3(request.getQuestion3())
-                .imageUrl(request.getImageUrl())
                 .postImage(postImage)
                 .user(user)
                 .build();
