@@ -34,8 +34,9 @@ public class WebSecurityConfigure {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer(){
          return (web) ->web.ignoring()
-                .antMatchers("/users/autologin/**","/users/signup/**","/v3/**","/swagger-ui/**")
-                 .antMatchers(HttpMethod.GET, "/test/**");
+                .antMatchers("/users/**","/test/**","/terms/**","/health/**","/images/**","/post","/users/autologin/**","/users/signup/**","/v3/**","/swagger-ui/**")
+                 .antMatchers(HttpMethod.GET, "/test/**")
+                 .antMatchers(HttpMethod.POST, "/posts/**");
     }
 
     private final CustomOAuth2UserService customOAuth2UserService;
