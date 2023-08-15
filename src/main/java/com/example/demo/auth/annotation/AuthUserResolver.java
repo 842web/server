@@ -22,7 +22,7 @@ public class AuthUserResolver implements HandlerMethodArgumentResolver {
 
     private final UserRepository userRepository;
 
-    //메소드 파라미터를 검사해 @AuthUser가 사용된 경우, 그 어노테이션이 붙은 타입이 ** 인 경우를 check한다.
+
     @Override
     public boolean supportsParameter(MethodParameter methodParameter){
 
@@ -72,6 +72,7 @@ public class AuthUserResolver implements HandlerMethodArgumentResolver {
             return user;
         }
         return null;
+
     }
 
 
