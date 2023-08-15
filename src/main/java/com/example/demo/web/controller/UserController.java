@@ -17,6 +17,12 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
 import com.example.demo.web.dto.request.UserRequestDto;
 import com.example.demo.web.dto.response.UserResponseDto;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +54,15 @@ public class UserController {
      * */
 
 
+
+    @Operation(summary = "회원가입", description = "카카오 로그인 시도시 회원가입 되어 있지 않은 유저의 경우 회원가입이 필수")
+    @Parameters({
+            @Parameter(name = "email", description = "kakao 계정의 email", required = true),
+            @Parameter(name= "instagram Id", description = "사용자가 사용하는 인스타그램의 아이디", required = true)
+    })
+    @ApiResponses(value={
+            @ApiResponse(responseCode = "200")
+    })
     @PostMapping("/signup")
     public BaseResponse<UserResponseDto.TokenInfo> CreateUserController(@Validated @RequestBody(required = false) UserRequestDto.CreateUserDto request){
 
@@ -77,8 +92,6 @@ public class UserController {
                 System.out.println("err here");
             }
             */
-
-
 
             //createdAt, updatedAt update
             userRepository.updateUserCreateAt(userId);
