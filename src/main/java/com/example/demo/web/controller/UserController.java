@@ -1,6 +1,8 @@
 package com.example.demo.web.controller;
 
 
+import com.example.demo.auth.UserPrincipal;
+import com.example.demo.auth.annotation.AuthUser;
 import com.example.demo.auth.provider.JwtTokenProvider;
 import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.config.CustomAuthenticationException;
@@ -23,6 +25,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.Optional;
 
 import static com.example.demo.config.BaseResponseStatus.EMPTY_REFRESH_TOKEN;
@@ -66,13 +69,15 @@ public class UserController {
 
 
             //board_img set
-
-            Long board_id = request.getBoardImage().getId();
+            /*
+            /Long board_id = request.getBoardImage().getId();
             Long changed_board_id = userService.createUserBoardId(board_id, userId);
             if (board_id != changed_board_id) {
                 //Exception
                 System.out.println("err here");
             }
+            */
+
 
 
             //createdAt, updatedAt update
@@ -105,8 +110,9 @@ public class UserController {
      * */
     @Tag(name = "users", description="회원 정보 수정 API")
     @PatchMapping("/")
-    public BaseResponse<UserResponseDto.UserModifyDto> UserModify(@Validated @RequestBody UserRequestDto.ModifyUserDto request, Long userId){
+    public BaseResponse<UserResponseDto.UserModifyDto> UserModify(@Validated @RequestBody UserRequestDto.ModifyUserDto request, @AuthUser User user){
 
+        Long userId = user.getId();
         var user_nickname="";
         var user_instagram_id="";
         if(request.getNickname()!= null){
@@ -191,8 +197,9 @@ public class UserController {
      * */
 
     @PostMapping("/withdraw")
-    public BaseResponse<UserResponseDto.UserWithdrawDto> UserRemove(@RequestParam( "userId") Long userId){
+    public BaseResponse<UserResponseDto.UserWithdrawDto> UserRemove(@AuthUser User user){
 
+        Long userId = user.getId();
         Integer status = userService.updateUserStatus(3, userId);
         String nickname = userRepository.findById(userId).get().getNickname();
         return new BaseResponse(UserConverter.toWirthdrawDto(status, nickname));
@@ -208,13 +215,16 @@ public class UserController {
      * */
     @Tag(name = "users", description="회원 Link 조회")
     @GetMapping("/link")
-    public BaseResponse<UserResponseDto.UserLinkDto> UserDetailLink(@RequestParam( "userId") Long userId){
-
+    public BaseResponse<UserResponseDto.UserLinkDto> UserDetailLink(@AuthUser User user){
+        //Principal 을 통해 불러 오는 방식
+        System.out.println(user);
+        Long userId = user.getId();
         System.out.println(userId);
         String user_link = userService.createUserLink(userId);
-    return new BaseResponse<>(UserConverter.toGetUserLinkDto(user_link));
-    }
 
+        return new BaseResponse<>(UserConverter.toGetUserLinkDto(user_link));
+
+    }
 
 
 }

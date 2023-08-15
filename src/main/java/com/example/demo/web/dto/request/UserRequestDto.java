@@ -21,8 +21,8 @@ public class UserRequestDto {
         @NotEmpty(message = "instagram_id를 입력해주세요")
         private String instagram_id;
 
-        @NotNull
-        private BoardImage boardImage;
+        //@NotNull
+        //private BoardImage boardImage;
 
     }
 
