@@ -21,6 +21,7 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -56,13 +57,6 @@ public class UserController {
 
 
     @Operation(summary = "회원가입", description = "카카오 로그인 시도시 회원가입 되어 있지 않은 유저의 경우 회원가입이 필수")
-    @Parameters({
-            @Parameter(name = "email", description = "kakao 계정의 email", required = true),
-            @Parameter(name= "instagram Id", description = "사용자가 사용하는 인스타그램의 아이디", required = true)
-    })
-    @ApiResponses(value={
-            @ApiResponse(responseCode = "200")
-    })
     @PostMapping("/signup")
     public BaseResponse<UserResponseDto.TokenInfo> CreateUserController(@Validated @RequestBody(required = false) UserRequestDto.CreateUserDto request){
 
@@ -121,7 +115,7 @@ public class UserController {
      * [PATCH] /users
      * @return BaseResponse<String>
      * */
-    @Tag(name = "users", description="회원 정보 수정 API")
+    @Operation(summary = "회원 정보 수정 API", description = "user의 닉네임 , user의 instagram Id 중 들어온 값(들)에 대해 변경하는 작업을 거친다.\n 유효한 acess token 값이 입력되어야 합니다.")
     @PatchMapping("/")
     public BaseResponse<UserResponseDto.UserModifyDto> UserModify(@Validated @RequestBody UserRequestDto.ModifyUserDto request, @AuthUser User user){
 
@@ -153,8 +147,9 @@ public class UserController {
      * [GET] /users/autologin
      * @return BaseResponse<String>
      * */
+    @Operation(summary = "자동 로그인 API", description = "access token 이 만료되었을 경우 만료된 access token과 refresh token 을 이용해 access token 을 재발급받는 API입니다. ")
     @GetMapping("/autologin")
-    public BaseResponse<UserResponseDto.TokenInfo> UserDetailsTokenInfo(@RequestHeader(value = "Authorization") String authorizationHeader, @RequestHeader(value = "Refresh-Token",required = false) String RefreshHeader, HttpServletRequest request) {
+    public BaseResponse<UserResponseDto.TokenInfo> UserDetailsTokenInfo(@Parameter(description = "access token의 값을 Bearer ***(토큰 값) 형태로 입력해주세요 ex. Bearer eyJhbGciOiJIUzI1NiJ9~~~ ")@RequestHeader(value = "Authorization") String authorizationHeader, @Parameter(description = "만료되지 않은 Refresh-token 값을 token의 값만 입력해주세요 ")@RequestHeader(value = "Refresh-Token",required = false) String RefreshHeader, HttpServletRequest request) {
         try {
             //access token 이 만료되었으니 jwtfilter를 정상적으로 통과할 수 없을 것이다. 따라서 jwtfilter에서 제외해주어야 한다.
             //따라서 access token 에 대해 check하는 기능이 필요하다.
@@ -209,6 +204,7 @@ public class UserController {
      * @return BaseResponse<String>
      * */
 
+    @Operation(summary = "회원 탈퇴 API", description = "회원 탈퇴를 위한 API입니다. 회원의 상태를 탈퇴중(status = 3)으로 변경하고 60일 뒤에 회원 관련 데이터를 삭제합니다\n 유효한 acess token 값이 입력되어야 합니다.")
     @PostMapping("/withdraw")
     public BaseResponse<UserResponseDto.UserWithdrawDto> UserRemove(@AuthUser User user){
 
@@ -226,7 +222,7 @@ public class UserController {
      * [GET] /users/link
      * @return BaseResponse<String>
      * */
-    @Tag(name = "users", description="회원 Link 조회")
+    @Operation(summary = "회원의 링크 값 조회", description = "회원의 Id 값을 이용해 암호화 값을 생성합니다. 이를 통해 회원의 게시판에 대한 링크를 생성합니다.\n 유효한 acess token 값이 입력되어야 합니다.")
     @GetMapping("/link")
     public BaseResponse<UserResponseDto.UserLinkDto> UserDetailLink(@AuthUser User user){
         //Principal 을 통해 불러 오는 방식
