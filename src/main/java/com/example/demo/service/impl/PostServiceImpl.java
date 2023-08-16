@@ -30,11 +30,14 @@ public class PostServiceImpl implements PostService {
         return result.getId();
     }
 
+
     // R (Read)
     @Override
     public Page<Post> findPostPagingCreatedAt(PageRequest pageRequest) {
-        return postRepository.findAllByOrderByCreatedAt(pageRequest);
+        return null;//postRepository.findAllByOrderByCreatedAt(pageRequest);
     }
+
+
 
     @Override
     public Post findPostById(Long postIdx) throws BaseException {

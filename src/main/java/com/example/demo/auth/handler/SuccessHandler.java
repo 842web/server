@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,15 +42,28 @@ public class SuccessHandler  extends SimpleUrlAuthenticationSuccessHandler {
                 logger.debug("응답이 이미 커밋된 상태입니다. ");
                 return;
             }
+
             if(status ==2){
                 response.getWriter().write(email + "회원가입이 되어 있지 않습니다. 회원가입으로 이동해주세요");
                 System.out.println(" 회원가입으로 이동해주세요");
-                getRedirectStrategy().sendRedirect(request, response, "http://localhost:8080/users/oauth2/users");
+                getRedirectStrategy().sendRedirect(request, response, "http://localhost:8080/users/signup");
                 return;
 
             }
-            String url = makeRedirectUrl(jwtTokenProvider.generateToken(authentication).getAccessToken());
-            getRedirectStrategy().sendRedirect(request, response, url); //성공 시점에 redirect
+            String access = jwtTokenProvider.generateToken(authentication).getAccessToken();
+            String refresh = jwtTokenProvider.generateToken(authentication).getRefreshToken();
+            userRepository.updateUserRefreshToken(refresh,userRepository.findByEmail(email).get().getId());
+            MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+            queryParams.add("access_token", access);
+            queryParams.add("refresh_token",refresh);
+            String URL = UriComponentsBuilder.newInstance()
+                    .scheme("http")
+                    .host("localhost")
+                    .path("/oauth2/callback")
+                    .queryParams(queryParams)
+                    .toUriString();
+           System.out.println(URL);
+            getRedirectStrategy().sendRedirect(request, response, URL); //성공 시점에 redirect
 
         }catch (Exception err){
             System.out.println(err);

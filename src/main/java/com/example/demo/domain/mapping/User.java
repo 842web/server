@@ -5,12 +5,14 @@ import com.example.demo.domain.common.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class User extends BaseEntity {
 
     @Id
@@ -18,10 +20,19 @@ public class User extends BaseEntity {
     @Column(name = "user_idx")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_image_idx")
-    private BoardImage boardImage;
+    //@ManyToOne(fetch = FetchType.LAZY)
+    //@JoinColumn(name = "board_image_idx")
+    //private BoardImage boardImage;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE,orphanRemoval = true,mappedBy = "user")
+    private List<userHasTerms> userHasTerms = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "user")
+    private List<Post> post = new ArrayList<>();
+
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private Admin admin;
     @Column(length = 30)
     private String instagram_id;
 
@@ -36,7 +47,9 @@ public class User extends BaseEntity {
     private String email;
     private Integer platform;
 
-    private String link;
+
+    private String Link_info;
+
 
     private Integer status;
 
