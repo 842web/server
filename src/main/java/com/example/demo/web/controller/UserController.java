@@ -79,7 +79,7 @@ public class UserController {
             userRepository.updateUserCreateAt(userId);
             userRepository.updateUserUpdatedAt(userId);
 
-            String user_link = userService.createUserLink(userId);
+            //String user_link = userService.createUserLink(userId);
 
 
             //jwtToken발급
@@ -211,9 +211,8 @@ public class UserController {
     public BaseResponse<UserResponseDto.UserLinkDto> UserDetailLink(@RequestParam( "userId") Long userId){
 
         System.out.println(userId);
-        String user_link = userService.findUserLink(userId);
-
-        return new BaseResponse<>(UserConverter.toGetUserLinkDto(user_link));
+        String user_link = userService.createUserLink(userId);
+    return new BaseResponse<>(UserConverter.toGetUserLinkDto(user_link));
     }
 
 

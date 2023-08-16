@@ -7,6 +7,7 @@ import com.example.demo.domain.mapping.User;
 import com.example.demo.provider.PostImageProvider;
 import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.utils.CryptographyUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -54,5 +55,22 @@ public class TestController {
        userRepository.deleteAllByDay();
             return null;
 
+    }
+
+    @GetMapping("/decording")
+    public String TestDecoring(String Link){
+
+        try {
+            CryptographyUtils cryptographyUtils = new CryptographyUtils();
+            String userId = cryptographyUtils.decrypt(Link);
+            System.out.println("decords userId: " + userId);
+            return userId;
+        }catch (Exception err){
+
+            System.out.println(err);
+
+            return null;
+
+        }
     }
 }
