@@ -28,13 +28,14 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    /*
     @Override
     public Long createUserBoardId(Long board_id, Long userId){
 
         userRepository.updateUserBoardId(board_id, userId);
 
         return userRepository.findById(userId).get().getBoardImage().getId();
-    }
+    }*/
 
     @Override
     public String createUserLink(Long userId){

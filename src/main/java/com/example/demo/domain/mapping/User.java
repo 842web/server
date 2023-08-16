@@ -20,9 +20,9 @@ public class User extends BaseEntity {
     @Column(name = "user_idx")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_image_idx")
-    private BoardImage boardImage;
+    //@ManyToOne(fetch = FetchType.LAZY)
+    //@JoinColumn(name = "board_image_idx")
+    //private BoardImage boardImage;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE,orphanRemoval = true,mappedBy = "user")
     private List<userHasTerms> userHasTerms = new ArrayList<>();

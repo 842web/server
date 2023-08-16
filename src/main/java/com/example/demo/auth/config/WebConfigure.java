@@ -1,9 +1,15 @@
 package com.example.demo.auth.config;
 
+import com.example.demo.auth.annotation.AuthUserResolver;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.List;
+
+@RequiredArgsConstructor
 @Configuration
 public class WebConfigure implements WebMvcConfigurer {
 
@@ -13,6 +19,7 @@ public class WebConfigure implements WebMvcConfigurer {
      *
      *
      * */
+    private final AuthUserResolver authUserResolver;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -24,5 +31,12 @@ public class WebConfigure implements WebMvcConfigurer {
                 .maxAge(3600);
 
 
+    }
+
+    //Resolver 추가
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers){
+
+        resolvers.add(authUserResolver);
     }
 }
