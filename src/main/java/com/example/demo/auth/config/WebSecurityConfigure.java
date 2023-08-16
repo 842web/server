@@ -4,20 +4,17 @@ import com.example.demo.auth.JwtAuthenticationEntryPoint;
 import com.example.demo.auth.filter.JwtAuthenticationFilter;
 import com.example.demo.auth.handler.FailureHandler;
 import com.example.demo.auth.handler.JwtAccessDeniedHandler;
-import com.example.demo.auth.handler.JwtAuthenticationExceptionHandler;
 import com.example.demo.auth.handler.SuccessHandler;
 import com.example.demo.auth.provider.JwtTokenProvider;
 import com.example.demo.auth.service.CustomOAuth2UserService;
-import com.example.demo.config.exception.ExceptionFilter;
+import com.example.demo.auth.filter.ExceptionFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -80,8 +77,6 @@ public class WebSecurityConfigure {
                 .antMatchers("/postImages/**").authenticated();
 
 
-        //
-
         http.exceptionHandling()
                 //.authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
@@ -98,15 +93,9 @@ public class WebSecurityConfigure {
                     //.failureHandler(failureHandler);
 
 
-        //Custom filter 적용
+        // Custom filter 적용
         http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
-        http.addFilterBefore(new JwtAuthenticationExceptionHandler(), JwtAuthenticationFilter.class);
-
-//        // filter 설정 (1) JWT Filter -> (2) Exception Filter
-//        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtTokenProvider);
-//        ExceptionFilter exceptionFilter = new ExceptionFilter();
-//        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-//                .addFilterBefore(exceptionFilter, JwtAuthenticationFilter.class);
+        http.addFilterBefore(new ExceptionFilter(), JwtAuthenticationFilter.class);
 
         return http.build();
 

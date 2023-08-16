@@ -1,29 +1,17 @@
 package com.example.demo.auth.filter;
 
 import com.example.demo.auth.provider.JwtTokenProvider;
-
-import com.example.demo.config.CustomAuthenticationException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.demo.config.exception.CustomAuthenticationException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.filter.GenericFilterBean;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.logging.Logger;
-
-import static com.example.demo.config.BaseResponseStatus.EMPTY_JWT;
+import static com.example.demo.config.base.Code.EMPTY_JWT;
 
 
 
