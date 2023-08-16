@@ -61,6 +61,22 @@ public class PostConvertor {
                 .build();
     }
 
+    public static PostResponseDto.PostDetailDto toPostDetailDto(Post post) {
+        return PostResponseDto.PostDetailDto.builder()
+                .postIdx(post.getId())
+                .questionerId(post.getQuestionerId())
+                .questionerName(post.getQuestionerName())
+                .answererIdx(post.getUser().getId())
+                .postImageIdx(post.getPostImage().getId())
+                .imageUrl(post.getImageUrl())
+                .question2(post.getQuestion2())
+                .question3(post.getQuestion3())
+                .question1(post.getQuestion1())
+                .question2(post.getQuestion2())
+                .question3(post.getQuestion3())
+                .build();
+    }
+
     public static PostResponseDto.PostDtoList toPostDtoList(List<Post> postList, Integer totalRecords) {
         List<PostResponseDto.PostDto> postDtoList =
                 postList.stream()

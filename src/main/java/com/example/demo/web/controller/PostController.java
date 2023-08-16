@@ -81,9 +81,9 @@ public class PostController {
      * @return BaseResponse<Post>
      * */
     @GetMapping("{postIdx}")
-    public BaseResponse<PostResponseDto.PostDto> getPostDetail(@NotBlank(message = "포스트 번호는 필수값입니다.") @PathVariable Long postIdx) throws BaseException {
+    public BaseResponse<PostResponseDto.PostDetailDto> getPostDetail(@NotBlank(message = "포스트 번호는 필수값입니다.") @PathVariable Long postIdx) throws BaseException {
         Post post = postService.findPostById(postIdx);
-        return new BaseResponse<>(PostConvertor.toPostDto(post));
+        return new BaseResponse<>(PostConvertor.toPostDetailDto(post));
     }
 
     /**
