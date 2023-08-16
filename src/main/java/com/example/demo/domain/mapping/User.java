@@ -3,7 +3,7 @@ package com.example.demo.domain.mapping;
 import com.example.demo.domain.common.BaseEntity;
 
 import lombok.*;
-
+import org.hibernate.annotations.DynamicInsert;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,8 @@ import java.util.List;
 @Entity
 @Builder
 @Getter
+@DynamicInsert
+@ToString
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class User extends BaseEntity {

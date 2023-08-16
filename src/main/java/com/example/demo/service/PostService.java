@@ -13,7 +13,7 @@ public interface PostService {
     Long savePost(Post post) throws BaseException;
 
     // R (Read)
-    Page<Post> findPostPagingCreatedAt(PageRequest pageRequest) throws BaseException;
+    Page<Post> findPostByUserIdx(Long userIdx, PageRequest pageRequest) throws BaseException;
 
     Post findPostById(Long postIdx) throws BaseException;
 

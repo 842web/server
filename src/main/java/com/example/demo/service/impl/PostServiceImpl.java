@@ -33,8 +33,8 @@ public class PostServiceImpl implements PostService {
 
     // R (Read)
     @Override
-    public Page<Post> findPostPagingCreatedAt(PageRequest pageRequest) {
-        return null;//postRepository.findAllByOrderByCreatedAt(pageRequest);
+    public Page<Post> findPostByUserIdx(Long userIdx, PageRequest pageRequest) {
+        return postRepository.findByUser_Id(userIdx, pageRequest);
     }
 
 
