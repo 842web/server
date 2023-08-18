@@ -59,7 +59,8 @@ public class SuccessHandler  extends SimpleUrlAuthenticationSuccessHandler {
             String URL = UriComponentsBuilder.newInstance()
                     .scheme("http")
                     .host("localhost")
-                    .path("/oauth2/callback")
+                    .port("8080")
+                    .path("/users/callback")
                     .queryParams(queryParams)
                     .toUriString();
            System.out.println(URL);

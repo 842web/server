@@ -23,7 +23,6 @@ public class User extends BaseEntity {
     //@ManyToOne(fetch = FetchType.LAZY)
     //@JoinColumn(name = "board_image_idx")
     //private BoardImage boardImage;
-
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE,orphanRemoval = true,mappedBy = "user")
     private List<userHasTerms> userHasTerms = new ArrayList<>();
 

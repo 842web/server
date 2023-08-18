@@ -50,7 +50,6 @@ public class PostController {
     public BaseResponse<PostResponseDto.PostDtoList> getPost(
             @NotNull(message = "페이지 사이즈는 필수값입니다.") @RequestParam Integer pageSize,
             @NotNull(message = "페이지 번호는 필수값입니다.") @RequestParam Integer pageNo) throws BaseException {
-
         // TODO: userIdx 받기, param Validation
         Page<Post> posts = postService.findPostPagingCreatedAt(PageRequest.of(pageNo, pageSize));
         return new BaseResponse<>(PostConvertor.toPostDtoList(posts.toList(), posts.getNumberOfElements()));
