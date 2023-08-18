@@ -1,8 +1,8 @@
 package com.example.demo.auth.config;
 
 import com.example.demo.auth.filter.JwtAuthenticationFilter;
-import com.example.demo.auth.handler.JwtAuthenticationExceptionHandler;
 import com.example.demo.auth.provider.JwtTokenProvider;
+import com.example.demo.auth.filter.ExceptionFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,10 +17,8 @@ public class JwtSecurityConfig extends SecurityConfigurerAdapter <DefaultSecurit
     @Override
     public void configure(HttpSecurity http){
 
-        //jwt filter 설정
+        // jwt filter 설정
         http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
-        http.addFilterBefore(new JwtAuthenticationExceptionHandler(), JwtAuthenticationFilter.class);
-
-
+        http.addFilterBefore(new ExceptionFilter(), JwtAuthenticationFilter.class);
     }
 }

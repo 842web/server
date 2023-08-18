@@ -2,6 +2,7 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${RDS_URL}
@@ -11,10 +12,8 @@ spring:
 
   jpa:
     open-in-view: true
-#    hibernate:
-#     ddl-auto: update
-
-
+    hibernate:
+#      ddl-auto: update
 #      naming:
 #        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 #      use-new-id-generator-mappings: false
@@ -25,7 +24,6 @@ spring:
       hibernate.use_sql_comments: true
       globally_quoted_identifiers: true # 예약어
       dialect: org.hibernate.dialect.MySQL8InnoDBDialect
-
 
   logging:
     level:
@@ -60,9 +58,22 @@ spring:
       initialize-schema: always
 
 
-
-
 jwt:
   secret: ${JWT_SECRET}
   access-token-validity-in-seconds: 3600000
+  refresh-token-validity-in-seconds: 259200000
+
+cloud:
+  aws:
+    s3:
+      bucket: ${S3_BUCKET_NAME}
+    stack.auto: false
+    region.static: ap-northeast-2
+    credentials:
+      accessKey: ${S3_ACCESS_KEY}
+      secretKey: ${S3_SECRECT_KEY}
   refresh-token-validity-in-seconds: 1209600000
+
+# 파일 최대 10MB까지 허용
+spring.servlet.multipart.maxFileSize: 10MB
+spring.servlet.multipart.maxRequestSize: 10MB

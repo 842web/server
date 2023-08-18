@@ -45,8 +45,7 @@ public class PostConvertor {
                 .question1(request.getQuestion1())
                 .question2(request.getQuestion2())
                 .question3(request.getQuestion3())
-                .imageUrl(request.getImageUrl())
-                //.postImage(postImage)
+                .postImage(postImage)
                 .user(user)
                 .build();
 
@@ -59,6 +58,22 @@ public class PostConvertor {
         return PostResponseDto.PostDto.builder()
                 .postIdx(post.getId())
                 .imageUrl(post.getImageUrl())
+                .build();
+    }
+
+    public static PostResponseDto.PostDetailDto toPostDetailDto(Post post) {
+        return PostResponseDto.PostDetailDto.builder()
+                .postIdx(post.getId())
+                .questionerId(post.getQuestionerId())
+                .questionerName(post.getQuestionerName())
+                .answererIdx(post.getUser().getId())
+                .postImageIdx(post.getPostImage().getId())
+                .imageUrl(post.getImageUrl())
+                .question2(post.getQuestion2())
+                .question3(post.getQuestion3())
+                .question1(post.getQuestion1())
+                .question2(post.getQuestion2())
+                .question3(post.getQuestion3())
                 .build();
     }
 
