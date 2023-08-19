@@ -33,8 +33,8 @@ public class WebSecurityConfigure {
     public WebSecurityCustomizer webSecurityCustomizer(){
          return (web) ->web.ignoring()
                 .antMatchers("/users/autologin","/test/**","/terms/**","/health/**","/images/**","/post","/users/autologin/**","/users/signup/**","/v3/**","/swagger-ui/**")
-                 .antMatchers(HttpMethod.GET, "/test/**", "/posts/**")
-                 .antMatchers(HttpMethod.POST, "/posts/**");
+                 .antMatchers(HttpMethod.GET, "/users/callback/**","/test/**","/posts/**")
+                 .antMatchers(HttpMethod.POST, "/posts");
     }
 
     private final CustomOAuth2UserService customOAuth2UserService;

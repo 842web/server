@@ -72,6 +72,7 @@ public class PostController {
         Long userIdx = Long.valueOf(cryptographyUtils.decrypt(link));
 
         Page<Post> posts = postService.findPostByUserIdx(userIdx, PageRequest.of(pageNo, pageSize));
+
         return new BaseResponse<>(PostConvertor.toPostDtoList(posts.toList(), posts.getNumberOfElements()));
     }
 

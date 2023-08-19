@@ -28,6 +28,16 @@ public class UserConverter {
                 .build();
     }
 
+    public static UserResponseDto.TokenInfo toUserTokenInfo(String accessToken, String refreshToken){
+
+        return UserResponseDto.TokenInfo.builder()
+                .accessToken(accessToken)
+                .accessTokenExpirationTime(Long.valueOf(3600000))
+                .refreshToken(refreshToken)
+                .refreshTokenExpirationTime(Long.valueOf(1209600000))
+                .build();
+    }
+
 
 
 }
