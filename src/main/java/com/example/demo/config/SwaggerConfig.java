@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Configuration;
                 )
         ),
         servers = {
-                @Server(url = "/", description = "Default")
+                @Server(url = "/api/", description = "Default")
         }
 )
 

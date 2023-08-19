@@ -1,17 +1,12 @@
 package com.example.demo.web.controller;
 
 
-import com.example.demo.auth.UserPrincipal;
 import com.example.demo.auth.annotation.AuthUser;
 import com.example.demo.auth.provider.JwtTokenProvider;
-import com.example.demo.config.BaseResponseStatus;
-import com.example.demo.config.CustomAuthenticationException;
+import com.example.demo.config.exception.CustomAuthenticationException;
+import com.example.demo.config.base.Code;
 import com.example.demo.converter.UserConverter;
-
 import com.example.demo.config.base.BaseResponse;
-
-
-
 import com.example.demo.domain.mapping.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
@@ -21,18 +16,16 @@ import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
 import java.util.Optional;
 
-import static com.example.demo.config.BaseResponseStatus.EMPTY_REFRESH_TOKEN;
 
 @Slf4j
 @Tag(name = "유저")
@@ -70,7 +63,7 @@ public class UserController {
                 if (request.getInstagram_id() != changed_instagram_id) {
                     //Exception
                 }
-                ;
+
             }
 
 
@@ -189,14 +182,14 @@ public class UserController {
                 return new BaseResponse<>(jwtTokenProvider.generateAccessToken(user_email));
             } else {
                 System.out.println("refresh token 불일치");
-                return new BaseResponse(BaseResponseStatus.INVALID_REFRESH_TOKEN);
+                return new BaseResponse<>(Code.INVALID_REFRESH_TOKEN);
             }
 
 
         }catch (CustomAuthenticationException ee){
 
             System.out.println(ee.getMessage());
-            return new BaseResponse(false, ee.getMessage(),400);
+            return new BaseResponse<>(false, ee.getMessage(),400);
         }
 
 
@@ -219,7 +212,7 @@ public class UserController {
         Long userId = user.getId();
         Integer status = userService.updateUserStatus(3, userId);
         String nickname = userRepository.findById(userId).get().getNickname();
-        return new BaseResponse(UserConverter.toWirthdrawDto(status, nickname));
+        return new BaseResponse<>(UserConverter.toWirthdrawDto(status, nickname));
 
 
     }
