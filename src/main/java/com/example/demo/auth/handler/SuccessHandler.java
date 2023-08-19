@@ -15,6 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @Slf4j
 @Component
@@ -44,9 +45,17 @@ public class SuccessHandler  extends SimpleUrlAuthenticationSuccessHandler {
             }
 
             if(status ==2){
-                response.getWriter().write(email + "회원가입이 되어 있지 않습니다. 회원가입으로 이동해주세요");
                 System.out.println(" 회원가입으로 이동해주세요");
-                getRedirectStrategy().sendRedirect(request, response, "http://localhost:8080/users/signup");
+                //getRedirectStrategy().sendRedirect(request, response, "http://localhost:8080/users/signup");
+                response.setCharacterEncoding("UTF-8");
+                response.setContentType("text/html; charset=UTF-8");
+                PrintWriter writer= response.getWriter();
+                String result = "{ isSucess: false \n" + "code: "+ response.getStatus()+"\n message: 회원가입이 되어 있지 않습니다." +
+                        "회원가입 페이지로 이동해주세요 \n user status: "+status+"(회원가입 필요)}";
+                writer.write(result);
+                writer.flush();
+                writer.close();
+
                 return;
 
             }
