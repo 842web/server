@@ -1,3 +1,5 @@
+# API Root path
+server.servlet.context-path: /api
 spring:
   mvc:
     pathmatch:
