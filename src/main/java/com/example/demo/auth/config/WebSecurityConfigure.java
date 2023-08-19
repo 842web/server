@@ -1,31 +1,41 @@
 package com.example.demo.auth.config;
 
+import com.example.demo.auth.JwtAuthenticationEntryPoint;
 import com.example.demo.auth.filter.JwtAuthenticationFilter;
 import com.example.demo.auth.handler.FailureHandler;
+import com.example.demo.auth.handler.JwtAccessDeniedHandler;
 import com.example.demo.auth.handler.SuccessHandler;
 import com.example.demo.auth.provider.JwtTokenProvider;
 import com.example.demo.auth.service.CustomOAuth2UserService;
+import com.example.demo.auth.filter.ExceptionFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
-@Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfigure {
 
-    /*
-    * Spring Security의 환경설정을 하는 Class이다.
-    * 주요 역할: 인증, 인가
-    * JWT 처리를 위한 Fliter을 @Bean으로 등록할 것
-    *
-    *
-    *  */
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer(){
+         return (web) ->web.ignoring()
+                .antMatchers("/users/autologin","/test/**","/terms/**","/health/**","/images/**","/post","/users/autologin/**","/users/signup/**","/v3/**","/swagger-ui/**")
+                 .antMatchers(HttpMethod.GET, "/users/callback/**","/test/**","/posts/**")
+                 .antMatchers(HttpMethod.POST, "/posts");
+    }
 
     private final CustomOAuth2UserService customOAuth2UserService;
 
@@ -35,9 +45,18 @@ public class WebSecurityConfigure {
 
     private final SuccessHandler successHandler;
 
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-
         //disable 설정
        http
                 .httpBasic().disable() //HTTP Basic Auth 기반 로그인 창이 뜨지 않는다.
@@ -47,6 +66,9 @@ public class WebSecurityConfigure {
                 //세션 사용하지 않음 >> JWT 등을 사용할 때 사용하는 것
 
         //리소스 인증 및 권한 설정
+
+        http.authorizeRequests().antMatchers("/").permitAll();
+
         http.authorizeRequests()
                 .antMatchers("/users/oauth2/").permitAll()
                 .antMatchers("/posts/").permitAll()
@@ -55,9 +77,12 @@ public class WebSecurityConfigure {
                 .antMatchers("/postImages/**").authenticated();
 
 
-        //oauth2Login 로직 중요!!
-            http.oauth2Login()
-                    .authorizationEndpoint().baseUri("/oauth2/authorize")
+        http.exceptionHandling()
+                //.authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .accessDeniedHandler(jwtAccessDeniedHandler)
+                .and()
+                .oauth2Login()
+                    .authorizationEndpoint().baseUri("/oauth2/authorize/**")
                     .and()
                     .redirectionEndpoint().baseUri("/oauth2/callback/**")
                     .and()
@@ -68,11 +93,13 @@ public class WebSecurityConfigure {
                     //.failureHandler(failureHandler);
 
 
-        //jwt filter 설정
+        // Custom filter 적용
         http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new ExceptionFilter(), JwtAuthenticationFilter.class);
 
-        return http.build(); //??에러 안나게 일단 넣어는 놓았다.
+        return http.build();
 
     }
+
 
 }

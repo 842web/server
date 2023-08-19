@@ -17,5 +17,36 @@ public class UserResponseDto {
         private Long refreshTokenExpirationTime;
     }
 
+    @Builder //
+    @Getter //
+    @AllArgsConstructor //
+    public static class UserLinkDto {
+
+        private String link_info;
+
+    }
+
+    @Builder
+    @Getter
+    @AllArgsConstructor
+    public static class UserModifyDto {
+
+        private String nick_name;
+
+        private String instagram_id;
+    }
+
+    @Builder
+    @Getter
+    @AllArgsConstructor
+    public static class UserWithdrawDto{
+
+        private String nick_name;
+
+        private int status;
+    }
+
+
+
 
 }

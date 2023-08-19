@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Slf4j
@@ -29,11 +30,14 @@ public class PostServiceImpl implements PostService {
         return result.getId();
     }
 
+
     // R (Read)
     @Override
-    public Page<Post> findPostPagingCreatedAt(PageRequest pageRequest) {
-        return postRepository.findAllByOrderByCreatedAt(pageRequest);
+    public Page<Post> findPostByUserIdx(Long userIdx, PageRequest pageRequest) {
+        return postRepository.findByUser_Id(userIdx, pageRequest);
     }
+
+
 
     @Override
     public Post findPostById(Long postIdx) throws BaseException {
